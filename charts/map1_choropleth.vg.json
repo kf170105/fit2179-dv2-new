@@ -32,7 +32,7 @@
     },
     {
       "data": {
-        "url": "../charts/southeast_asia.topojson",
+        "url": "charts/southeast_asia.topojson",
         "format": {
           "type": "topojson",
           "feature": "ne_110m_admin_0_countries"
