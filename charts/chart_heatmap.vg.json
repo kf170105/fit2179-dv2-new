@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "padding": {"top": 5, "bottom": 80, "left": 5, "right": 5},
+  "padding": {"top": 5, "bottom": 20, "left": 5, "right": 5},
   "title": {
     "text": "When Do Malaysians Donate Blood?",
     "subtitle": [

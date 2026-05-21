@@ -30,7 +30,7 @@
 }
     }
   ],
-  "padding": {"bottom": 20},
+  "padding": {"bottom": 40},
   "data": {
     "url": "data/donations_facility_dataset2_clean.csv"
   },
