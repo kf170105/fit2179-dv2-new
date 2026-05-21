@@ -23,7 +23,7 @@
   "width": 460,
   "height": 200,
   "data": {
-    "url": "../data/donations_facility_dataset2_clean.csv"
+    "url": "data/donations_facility_dataset2_clean.csv"
   },
   "transform": [
     {"filter": "datum.daily > 0"},

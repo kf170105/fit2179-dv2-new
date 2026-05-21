@@ -21,7 +21,7 @@
   "width": 500,
   "height": 350,
   "data": {
-    "url": "../data/blood_donations_filtered_dataset1.csv"
+    "url": "data/blood_donations_filtered_dataset1.csv"
   },
   "transform": [
     {"filter": "datum.blood_type == 'all'"},
