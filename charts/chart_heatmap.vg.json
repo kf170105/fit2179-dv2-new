@@ -1,0 +1,175 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "padding": {"top": 5, "bottom": 80, "left": 5, "right": 5},
+  "title": {
+    "text": "When Do Malaysians Donate Blood?",
+    "subtitle": [
+  "Average daily blood donors per state per month from January 2023 to September 2025.",
+  "KL(main capital) averages 560 daily donors — 4 times more than any other state year-round"
+],
+    "dy": -13,
+    "fontSize": 18,
+    "font": "Open Sans",
+    "fontWeight": "bold",
+    "subtitleFontSize": 12,
+    "subtitleFont": "Open Sans",
+    "subtitleFontWeight": "normal",
+    "subtitleColor": "#666666",
+    "color": "#333333",
+    "anchor": "start",
+    "subtitlePadding": 8
+  },
+  "width": 700,
+  "height": 400,
+  "data": {
+    "url": "../data/blood_donations_filtered_dataset1.csv"
+  },
+  "transform": [
+    {"filter": "datum.blood_type == 'all'"},
+    {"calculate": "month(datum.date)", "as": "month_num"},
+    {
+      "aggregate": [
+        {"op": "mean", "field": "donations", "as": "avg_donations"}
+      ],
+      "groupby": ["state", "month_num"]
+    },
+    {
+  "calculate": "datum.avg_donations < 75 ? 'Under 75' : datum.avg_donations < 100 ? '75–100' : datum.avg_donations < 130 ? '100–130' : datum.avg_donations < 200 ? '130–200' : 'Above 200'",
+  "as": "donor_category"
+},
+    {
+  "calculate": "datum.month_num == 0 ? 'January' : datum.month_num == 1 ? 'February' : datum.month_num == 2 ? 'March' : datum.month_num == 3 ? 'April' : datum.month_num == 4 ? 'May' : datum.month_num == 5 ? 'June' : datum.month_num == 6 ? 'July' : datum.month_num == 7 ? 'August' : datum.month_num == 8 ? 'September' : datum.month_num == 9 ? 'October' : datum.month_num == 10 ? 'November' : 'December'",
+  "as": "month_name"
+}
+  ],
+  "layer": [
+    {
+      "mark": {
+  "type": "rect",
+  "stroke": "white",
+  "strokeWidth": 1,
+  "strokeOpacity": 0.27
+},
+      "encoding": {
+        "x": {
+          "field": "month_num",
+          "type": "ordinal",
+          "title": "Month",
+          "axis": {
+            "labelExpr": "['January','February','March','April','May','June','July','August','September','October','November','December'][datum.value]",
+            "labelAngle": 0,
+            "labelFont": "Open Sans",
+            "labelFontSize": 11,
+            "titleFont": "Open Sans",
+            "titleFontSize": 12,
+            "titlePadding": 10
+          }
+        },
+        "y": {
+          "field": "state",
+          "type": "nominal",
+          "title": "State",
+          "sort": "-x",
+          "axis": {
+            "labelFont": "Open Sans",
+            "labelFontSize": 11
+          }
+        },
+        "color": {
+  "field": "donor_category",
+  "type": "ordinal",
+  "scale": {
+  "domain": ["Above 200", "130–200", "100–130", "75–100", "Under 75"],
+  "range": ["#7B241C", "#E74C3C", "#F1948A", "#F5B7B1", "#FDE8E8"]
+},
+  "legend": {
+    "title": "Average Donor per Day",
+    "orient": "right",
+    "titleFontSize": 12,
+    "titleFont": "Open Sans",
+    "labelFontSize": 11,
+    "labelFont": "Open Sans",
+    "symbolType": "square"
+  }
+},
+        "tooltip": [
+          {
+            "field": "state",
+            "type": "nominal",
+            "title": "State"
+          },
+          {
+            "field": "month_name",
+            "type": "nominal",
+            "title": "Month"
+          },
+          {
+            "field": "avg_donations",
+            "type": "quantitative",
+            "title": "Average Donors per Day",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 8,
+        "font": "Open Sans"
+      },
+      "encoding": {
+        "x": {"field": "month_num", "type": "ordinal"},
+        "y": {"field": "state", "type": "nominal", "sort": "-x"},
+        "text": {
+          "field": "avg_donations",
+          "type": "quantitative",
+          "format": ".0f"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.avg_donations > 130",
+            "value": "white"
+          },
+          "value": "#333333"
+        }
+      }
+    },
+    {
+  "data": {
+    "values": [{"month_num": 4, "state": "W.P. Kuala Lumpur"}]
+  },
+  "mark": {
+  "type": "rule",
+  "color": "#333333",
+  "strokeWidth": 1
+  
+},
+  "encoding": {
+  "x": {"field": "month_num", "type": "ordinal"},
+  "xOffset": {"value": 8},
+  "y": {"value": 390},
+  "y2": {"value": 455}
+}
+},
+{
+  "data": {
+    "values": [{"month_num": 4, "state": "W.P. Kuala Lumpur"}]
+  },
+  "mark": {
+    "type": "text",
+    "dy": 78,
+    "fontSize": 11,
+    "fontWeight": "bold",
+    "font": "Open Sans",
+    "color": "#7B241C",
+    "align": "center"
+  },
+  "encoding": {
+    "x": {"field": "month_num", "type": "ordinal"},
+    "y": {"field": "state", "type": "nominal", "sort": "-x"},
+    "text": {"value": "Highest average number of donor (624) for Kuala Lumpur during May"}
+  }
+}
+  ]
+}

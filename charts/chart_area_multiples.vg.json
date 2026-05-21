@@ -1,0 +1,172 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Who Donates Blood in Malaysia?",
+    "subtitle": [
+      "Monthly donations by social group from January 2023 to September 2025.",
+      "Civilians consistently dominate — students spike during campaigns"
+    ],
+    "fontSize": 18,
+    "font": "Open Sans",
+    "fontWeight": "bold",
+    "subtitleFontSize": 12,
+    "subtitleFont": "Open Sans",
+    "subtitleFontWeight": "normal",
+    "subtitleColor": "#666666",
+    "color": "#333333",
+    "anchor": "start",
+    "subtitlePadding": 8
+  },
+  "params": [
+    {
+      "name": "year_select",
+      "value": 2023,
+      "bind": {
+  "input": "range",
+  "min": 2023,
+  "max": 2025,
+  "step": 1,
+  "name": "Select Year: "
+}
+    }
+  ],
+  "padding": {"bottom": 20},
+  "data": {
+    "url": "../data/donations_facility_dataset2_clean.csv"
+  },
+  "transform": [
+    {"filter": "datum.daily > 0"},
+    {"filter": "year(datum.date_iso) == year_select"},
+    {
+      "fold": ["social_civilian", "social_student", "social_policearmy"],
+      "as": ["social_type", "count"]
+    },
+    {
+      "calculate": "toNumber(datum.count)",
+      "as": "count_num"
+    },
+    {
+      "calculate": "datum.social_type == 'social_civilian' ? 'Civilians' : datum.social_type == 'social_student' ? 'Students' : 'Police & Army'",
+      "as": "donor_group"
+    }
+  ],
+  "facet": {
+    "field": "donor_group",
+    "type": "nominal",
+    "title": null,
+    "sort": ["Civilians", "Students", "Police & Army"],
+    
+    "header": {
+      
+      "labelFont": "Open Sans",
+      "labelFontSize": 16,
+      "labelFontWeight": "bold",
+      "labelColor": "#333333"
+    }
+  },
+  "columns": 1,
+  "spacing": 39,
+  "resolve": {
+  "scale": {"y": "independent"},
+  "axis": {"x": "independent"}
+},
+  
+  "spec": {
+  "width": 650,
+  "height": 120,
+  "layer": [
+    {
+      "mark": {
+        "type": "area",
+        "opacity": 0.8,
+        "line": true
+      },
+      "encoding": {
+        "x": {
+          "field": "date_iso",
+          "type": "temporal",
+          "timeUnit": "yearmonth",
+          "title": "Month",
+          "axis": {
+            "titleFont": "Open Sans",
+            "titleFontSize": 11,
+            "labelFont": "Open Sans",
+            "labelFontSize": 10,
+            "format": "%b %Y",
+            "labelAngle": -30,
+            "grid": false
+          }
+        },
+        "y": {
+          "field": "count_num",
+          "type": "quantitative",
+          "aggregate": "sum",
+          "title": "Total Donations",
+          "axis": {
+            "titleFont": "Open Sans",
+            "titleFontSize": 11,
+            "labelFont": "Open Sans",
+            "labelFontSize": 10,
+            "grid": false,
+            "format": ",.0f"
+          }
+        },
+        "color": {
+          "field": "donor_group",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Civilians", "Students", "Police & Army"],
+            "range": ["#E67E22", "#3498DB", "#8E44AD"]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          {"field": "date_iso", "type": "temporal", "timeUnit": "yearmonth", "title": "Month", "format": "%B %Y"},
+          {"field": "donor_group", "type": "nominal", "title": "Donor Group"},
+          {"field": "count_num", "type": "quantitative", "aggregate": "sum", "title": "Total Donations", "format": ",.0f"}
+        ]
+      }
+    },
+    {
+      "transform": [
+        {"timeUnit": "yearmonth", "field": "date_iso", "as": "year_month"},
+        {
+          "aggregate": [{"op": "sum", "field": "count_num", "as": "monthly_total"}],
+          "groupby": ["year_month", "donor_group"]
+        },
+        {
+          "window": [{"op": "max", "field": "monthly_total", "as": "peak"}],
+          "groupby": ["donor_group"],
+          "frame": [null, null]
+        },
+        {"filter": "datum.monthly_total == datum.peak && datum.donor_group == 'Civilians'"},
+        {
+  "calculate": "'Peak civilian donations: ' + format(datum.monthly_total, ',.0f') + ' donors'",
+  "as": "peak_label"
+}
+      ],
+      "layer": [
+        {
+          "mark": {"type": "rule", "strokeDash": [4, 2], "color": "#333333", "strokeWidth": 1.5},
+          "encoding": {
+            "x": {"field": "year_month", "type": "temporal", "timeUnit": "yearmonth"},
+            "y": {"field": "monthly_total", "type": "quantitative"},
+            "y2": {"value": -15}
+          }
+        },
+        {
+          "mark": {"type": "text", "fontSize": 10, "font": "Open Sans", "fontWeight": "bold", "color": "#333333", "align": "left", "dx": -50, "y": -25},
+          "encoding": {
+            "x": {"field": "year_month", "type": "temporal", "timeUnit": "yearmonth"},
+            "text": {"field": "peak_label", "type": "nominal"}
+          }
+        }
+      ]
+    }
+  ]
+},
+"config": {
+  "font": "Open Sans",
+  "view": {"stroke": null}
+}
+}

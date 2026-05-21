@@ -1,0 +1,131 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Which Malaysian State Donates the Most Blood?",
+    "subtitle": "Average blood donors per day per state, from January 2023 to September 2025",
+    "dy": -20,
+    "fontSize": 18,
+    "font": "Open Sans",
+    "subtitleFont": "Open Sans",
+    "subtitleFontSize": 12,
+    "fontWeight": "bold",
+    "subtitleFontWeight": "normal",
+    "subtitleColor": "#666666",
+    "anchor": "start",
+    "subtitlePadding": 5
+  },
+  "width": 800,
+  "height": 450,
+  "projection": {
+    "type": "equirectangular",
+    "center": [114.5, 2.5],
+    "scale": 1500
+  },
+  "layer": [
+    {
+      "data": {"sphere": true},
+      "mark": {
+        "type": "geoshape",
+        "fill": "#EBF5FB",
+        "stroke": null
+      }
+    },
+    {
+      "data": {
+        "url": "../charts/southeast_asia.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "ne_110m_admin_0_countries"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#DDDDDD",
+        "stroke": "white",
+        "strokeWidth": 0.5
+      }
+    },
+    {
+      "data": {
+        "url": "../data/blood_donations_filtered_dataset1.csv"
+      },
+      "transform": [
+        {"filter": "datum.blood_type == 'all'"},
+        {
+          "calculate": "datum.state == 'W.P. Kuala Lumpur' ? 'Kuala Lumpur' : datum.state",
+          "as": "state_name"
+        },
+        {
+          "aggregate": [
+  {"op": "mean", "field": "donations", "as": "avg_daily_donations"},
+  {"op": "sum", "field": "donations", "as": "total_donations"}
+],
+          "groupby": ["state_name"]
+        },
+        {
+          "calculate": "datum.avg_daily_donations < 30 ? 'Under 30' : datum.avg_daily_donations < 60 ? '30–60' : datum.avg_daily_donations < 90 ? '60–90' : datum.avg_daily_donations < 120 ? '90–120' : 'Above 120'",
+          "as": "donation_category"
+        },
+        {
+          "lookup": "state_name",
+          "from": {
+            "data": {
+              "url": "../charts/malaysia.topojson",
+              "format": {
+                "type": "topojson",
+                "feature": "ne_10m_admin_1_states_provinces"
+              }
+            },
+            "key": "properties.name",
+            "fields": ["type", "properties", "geometry"]
+          },
+          "as": ["type", "properties", "geo"]
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "white",
+        "strokeWidth": 0.8
+      },
+      "encoding": {
+        "shape": {
+          "field": "geo",
+          "type": "geojson"
+        },
+        "color": {
+          "field": "donation_category",
+          "type": "ordinal",
+          "scale": {
+            "domain": ["Above 120", "90–120", "60–90", "30–60", "Under 30"],
+            "range": ["#7B241C", "#C0392B", "#E74C3C", "#F1948A", "#FADBD8"]
+          },
+          "legend": {
+            "title": "Average Blood Donor per Day",
+            "orient": "right",
+            "offset": 10,
+            "titleFont": "Open Sans",
+            "labelFont": "Open Sans",
+            "titleFontSize": 12,
+            "labelFontSize": 11,
+            "symbolType": "square"
+          }
+        },
+        "tooltip": [
+  {"field": "state_name", "type": "nominal", "title": "State"},
+  {
+    "field": "avg_daily_donations",
+    "type": "quantitative",
+    "title": "Average Blood Donor per Day",
+    "format": ".1f"
+  },
+  {
+    "field": "total_donations",
+    "type": "quantitative",
+    "title": "Total Blood Donors",
+    "format": ","
+  }
+]
+      }
+    }
+  ]
+}

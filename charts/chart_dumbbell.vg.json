@@ -1,0 +1,202 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Are More Malaysians Becoming Regular Blood Donors?",
+    "subtitle": [
+  "Blue = 2023, Red = 2024 with average daily donors per hospital.",
+  "New donors = first-timers, Regular donors = repeat donors, Irregular donors= occasional.",
+  "Regular donors rise from 46.9 to 47.8 — more Malaysians giving blood habitually",
+  "between 2023 and 2024"
+],
+    "offset": 20,
+    "fontSize": 18,
+    "font": "Open Sans",
+    "fontWeight": "bold",
+    "subtitleFontSize": 12,
+    "subtitleFont": "Open Sans",
+    "subtitleFontWeight": "normal",
+    "subtitleColor": "#666666",
+    "color": "#333333",
+    "anchor": "start",
+    "subtitlePadding": 8
+  },
+  "width": 460,
+  "height": 200,
+  "data": {
+    "url": "../data/donations_facility_dataset2_clean.csv"
+  },
+  "transform": [
+    {"filter": "datum.daily > 0"},
+    {"filter": "year(datum.date_iso) == 2023 || year(datum.date_iso) == 2024"},
+    {
+      "calculate": "toString(year(datum.date_iso))",
+      "as": "year"
+    },
+    {
+      "aggregate": [
+        {"op": "mean", "field": "donations_new", "as": "avg_new"},
+        {"op": "mean", "field": "donations_regular", "as": "avg_regular"},
+        {"op": "mean", "field": "donations_irregular", "as": "avg_irregular"}
+      ],
+      "groupby": ["year"]
+    },
+    {
+      "fold": ["avg_new", "avg_regular", "avg_irregular"],
+      "as": ["donor_type_raw", "avg_daily"]
+    },
+    {
+      "calculate": "datum.donor_type_raw == 'avg_new' ? 'New Donors' : datum.donor_type_raw == 'avg_regular' ? 'Regular Donors' : 'Irregular Donors'",
+      "as": "donor_label"
+    },
+    {
+      "window": [{"op": "max", "field": "avg_daily", "as": "group_max"}],
+      "groupby": ["donor_label"],
+      "frame": [null, null]
+    }
+  ],
+  "layer": [
+    {
+      "mark": {"type": "rule", "strokeWidth": 2, "color": "#888888"},
+      "encoding": {
+        "x": {"field": "avg_daily", "type": "quantitative", "aggregate": "min"},
+        "x2": {"field": "avg_daily", "aggregate": "max"},
+        "y": {
+          "field": "donor_label",
+          "type": "nominal",
+          "sort": ["Regular Donors", "New Donors", "Irregular Donors"]
+        }
+      }
+    },
+    {
+      "mark": {"type": "point", "filled": true, "size": 30, "opacity": 1},
+      "encoding": {
+        "x": {
+          "field": "avg_daily",
+          "type": "quantitative",
+          "title": "Average Daily Donors per Hospital",
+          "axis": {
+            "titleFont": "Open Sans",
+            "titleFontSize": 12,
+            "labelFont": "Open Sans",
+            "labelFontSize": 11,
+            "grid": false
+          }
+        },
+        "y": {
+          "field": "donor_label",
+          "type": "nominal",
+          "title": null,
+          "sort": ["Regular Donors", "New Donors", "Irregular Donors"],
+          "axis": {"labelFont": "Open Sans", "labelFontSize": 12}
+        },
+        "color": {
+          "field": "year",
+          "type": "ordinal",
+          "scale": {
+            "domain": ["2023", "2024"],
+            "range": ["#2980B9", "#C0392B"]
+          },
+          "legend": {
+            "title": "Year",
+            "orient": "right",
+            "offset": 65,
+            "titleFont": "Open Sans",
+            "labelFont": "Open Sans",
+            "titleFontSize": 12,
+            "labelFontSize": 11
+          }
+        },
+        "tooltip": [
+          {"field": "donor_label", "type": "nominal", "title": "Donor Type"},
+          {"field": "year", "type": "ordinal", "title": "Year"},
+          {
+            "field": "avg_daily",
+            "type": "quantitative",
+            "title": "Average Daily Donors",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [{"filter": "datum.avg_daily >= datum.group_max"}],
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "font": "Open Sans",
+        "fontWeight": "bold",
+        "align": "left",
+        "dx": 3,
+        "dy": -12
+      },
+      "encoding": {
+        "x": {"field": "avg_daily", "type": "quantitative"},
+        "y": {
+          "field": "donor_label",
+          "type": "nominal",
+          "sort": ["Regular Donors", "New Donors", "Irregular Donors"]
+        },
+        "text": {"field": "avg_daily", "type": "quantitative", "format": ".1f"},
+        "color": {
+          "field": "year",
+          "type": "ordinal",
+          "scale": {"domain": ["2023", "2024"], "range": ["#2980B9", "#C0392B"]}
+        }
+      }
+    },
+    {
+      "transform": [{"filter": "datum.avg_daily < datum.group_max"}],
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "font": "Open Sans",
+        "fontWeight": "bold",
+        "align": "right",
+        "dx": -3,
+        "dy": -12
+      },
+      "encoding": {
+        "x": {"field": "avg_daily", "type": "quantitative"},
+        "y": {
+          "field": "donor_label",
+          "type": "nominal",
+          "sort": ["Regular Donors", "New Donors", "Irregular Donors"]
+        },
+        "text": {"field": "avg_daily", "type": "quantitative", "format": ".1f"},
+        "color": {
+          "field": "year",
+          "type": "ordinal",
+          "scale": {"domain": ["2023", "2024"], "range": ["#2980B9", "#C0392B"]}
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [{"x": 43.0, "donor_label": "Regular Donors"}]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 10,
+        "font": "Open Sans",
+        "fontWeight": "bold",
+        "color": "#000000",
+        "align": "left",
+        "dx":-23,
+        "dy": 12
+      },
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative"},
+        "y": {
+          "field": "donor_label",
+          "type": "nominal",
+          "sort": ["Regular Donors", "New Donors", "Irregular Donors"]
+        },
+        "text": {"value": ["Malaysia's loyal donors", "growing"]}
+      }
+    }
+  ],
+  "config": {
+    "font": "Open Sans",
+    "view": {"stroke": null}
+  }
+}

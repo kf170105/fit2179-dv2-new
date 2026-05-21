@@ -1,0 +1,25 @@
+var choropleth_map = "charts/map1_choropleth.vg.json";
+var heatmap = "charts/chart_heatmap.vg.json";
+var stacked_area = "charts/chart_area_multiples.vg.json";
+var dumbbell = "charts/chart_dumbbell.vg.json";
+var lollipop = "charts/chart_lollipop.vg.json";
+
+vegaEmbed("#choropleth_map", choropleth_map, {"actions": false})
+  .then(function(result){})
+  .catch(console.error);
+
+vegaEmbed("#heatmap", heatmap, {"actions": false})
+  .then(function(result){})
+  .catch(console.error);
+
+vegaEmbed("#stacked_area", stacked_area, {"actions": false})
+  .then(function(result){})
+  .catch(console.error);
+
+vegaEmbed("#dumbbell", dumbbell, {"actions": false})
+  .then(function(result){})
+  .catch(console.error);
+
+vegaEmbed("#lollipop", lollipop, {"actions": false})
+  .then(function(result){})
+  .catch(console.error);
