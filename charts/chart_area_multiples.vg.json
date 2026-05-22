@@ -3,19 +3,21 @@
   "title": {
     "text": "Who Donates Blood in Malaysia?",
     "subtitle": [
-      "Monthly donations by social group from January 2023 to September 2025.",
-      "Civilians consistently dominate — students spike during campaigns"
+      "Monthly donations by social group from January 2023 to ",
+      "September 2025. Civilians consistently dominate ",
+      "whereas students spike during campaigns."
     ],
     "fontSize": 18,
-    "font": "Open Sans",
+    "font": "Georgia",
     "fontWeight": "bold",
-    "subtitleFontSize": 12,
+    "subtitleFontSize": 13,
     "subtitleFont": "Open Sans",
     "subtitleFontWeight": "normal",
     "subtitleColor": "#666666",
     "color": "#333333",
     "anchor": "start",
-    "subtitlePadding": 8
+    "subtitlePadding": 8,
+    "offset": 25
   },
   "params": [
     {
@@ -59,7 +61,7 @@
     "header": {
       
       "labelFont": "Open Sans",
-      "labelFontSize": 16,
+      "labelFontSize": 15,
       "labelFontWeight": "bold",
       "labelColor": "#333333"
     }

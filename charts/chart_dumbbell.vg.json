@@ -1,18 +1,18 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Are More Malaysians Becoming Regular Blood Donors?",
+    "text": ["Are More Malaysians Becoming","Regular Blood Donors?"],
     "subtitle": [
-  "Blue = 2023, Red = 2024 with average daily donors per hospital.",
-  "New donors = first-timers, Regular donors = repeat donors, Irregular donors= occasional.",
-  "Regular donors rise from 46.9 to 47.8 — more Malaysians giving blood habitually",
-  "between 2023 and 2024"
+  "Blue = 2023, Red = 2024 with average daily donors per",
+  "hospital. New donors = first-timers, Regular donors =",
+  "repeat donors, Irregular donors= occasional. Regular",
+  "donors rise from 46.9 to 47.8."
 ],
-    "offset": 20,
+    "offset": -60,
     "fontSize": 18,
-    "font": "Open Sans",
+    "font": "Georgia",
     "fontWeight": "bold",
-    "subtitleFontSize": 12,
+    "subtitleFontSize": 13,
     "subtitleFont": "Open Sans",
     "subtitleFontWeight": "normal",
     "subtitleColor": "#666666",
@@ -20,8 +20,8 @@
     "anchor": "start",
     "subtitlePadding": 8
   },
-  "width": 460,
-  "height": 200,
+  "width": 438,
+  "height": 350,
   "data": {
     "url": "data/donations_facility_dataset2_clean.csv"
   },
@@ -87,7 +87,12 @@
           "type": "nominal",
           "title": null,
           "sort": ["Regular Donors", "New Donors", "Irregular Donors"],
-          "axis": {"labelFont": "Open Sans", "labelFontSize": 12}
+          "axis": {
+  "labelFont": "Open Sans",
+  "labelFontSize": 12,
+  "labelExpr": "split(datum.label, ' ')",
+  "labelLineHeight": 14
+}
         },
         "color": {
           "field": "year",
@@ -98,12 +103,14 @@
           },
           "legend": {
             "title": "Year",
-            "orient": "right",
-            "offset": 65,
+            "orient": "none",
+            "legendX": 385,
+            "legendY": -90,
             "titleFont": "Open Sans",
             "labelFont": "Open Sans",
             "titleFontSize": 12,
-            "labelFontSize": 11
+            "labelFontSize": 10
+           
           }
         },
         "tooltip": [
@@ -191,7 +198,7 @@
           "type": "nominal",
           "sort": ["Regular Donors", "New Donors", "Irregular Donors"]
         },
-        "text": {"value": ["Malaysia's loyal donors", "growing"]}
+        "text": {"value": ["Malaysia's loyal", "donors growing"]}
       }
     }
   ],

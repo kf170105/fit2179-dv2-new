@@ -7,19 +7,19 @@
       "Positive = more donors in 2024. Negative = fewer donors."
     ],
     "fontSize": 18,
-    "font": "Open Sans",
+    "font": "Georgia",
     "fontWeight": "bold",
-    "subtitleFontSize": 12,
+    "subtitleFontSize": 13,
     "subtitleFont": "Open Sans",
     "subtitleFontWeight": "normal",
     "subtitleColor": "#666666",
     "color": "#333333",
     "anchor": "start",
     "subtitlePadding": 8,
-    "offset": 20
+    "offset": 30
   },
   "width": 500,
-  "height": 350,
+  "height": 400,
   "data": {
     "url": "data/blood_donations_filtered_dataset1.csv"
   },
@@ -102,7 +102,7 @@
           "field": "growth_rate",
           "type": "quantitative",
           "title": "Growth Rate of Blood Donation (%)",
-          "scale": {"domain": [-8, 14]},
+          "scale": {"domain": [-10, 14]},
           "axis": {
             "format": "+.0f",
             "titleFont": "Open Sans",

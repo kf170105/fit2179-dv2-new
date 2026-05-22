@@ -3,6 +3,7 @@ var heatmap = "charts/chart_heatmap.vg.json";
 var stacked_area = "charts/chart_area_multiples.vg.json";
 var dumbbell = "charts/chart_dumbbell.vg.json";
 var lollipop = "charts/chart_lollipop.vg.json";
+var slope = "charts/chart_slope.vg.json";
 
 vegaEmbed("#choropleth_map", choropleth_map, {"actions": false})
   .then(function(result){})
@@ -21,5 +22,9 @@ vegaEmbed("#dumbbell", dumbbell, {"actions": false})
   .catch(console.error);
 
 vegaEmbed("#lollipop", lollipop, {"actions": false})
+  .then(function(result){})
+  .catch(console.error);
+
+vegaEmbed("#slope", slope, {"actions": false, "width": "container"})
   .then(function(result){})
   .catch(console.error);

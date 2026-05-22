@@ -1,0 +1,213 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "padding": {"top": 10, "bottom": 10, "left": 10, "right": 140},
+  "title": {
+    "text": "How Did State Blood Donations Change?",
+    "subtitle": [
+      "Average daily donors per state, 2024 vs 2025.",
+      "W.P. Kuala Lumpur excluded (560/day) for scale clarity."
+    ],
+    "fontSize": 18,
+    "font": "Georgia",
+    "fontWeight": "bold",
+    "subtitleFontSize": 13,
+    "subtitleFont": "Open Sans",
+    "subtitleFontWeight": "normal",
+    "subtitleColor": "#666666",
+    "color": "#333333",
+    "anchor": "start",
+    "subtitlePadding": 8,
+    "offset": -30
+  },
+  "width": "container",
+  "height": 450,
+  "data": {"url": "data/blood_donations_filtered_dataset1.csv"},
+  "transform": [
+    {"filter": "datum.blood_type == 'all'"},
+    {"filter": "datum.state != 'W.P. Kuala Lumpur'"},
+    {"calculate": "year(datum.date)", "as": "year_num"},
+    {"filter": "datum.year_num == 2024 || datum.year_num == 2025"},
+    {
+      "aggregate": [
+        {"op": "mean", "field": "donations", "as": "avg_donations"}
+      ],
+      "groupby": ["state", "year_num"]
+    },
+    {
+      "window": [
+        {"op": "first_value", "field": "avg_donations", "as": "val_2024"},
+        {"op": "last_value", "field": "avg_donations", "as": "val_2025"}
+      ],
+      "sort": [{"field": "year_num", "order": "ascending"}],
+      "groupby": ["state"],
+      "frame": [null, null]
+    },
+    {
+      "calculate": "datum.val_2025 >= datum.val_2024 ? 'Increased' : 'Decreased'",
+      "as": "direction"
+    },
+    {
+      "calculate": "datum.state == 'Perak' ? -22 : datum.state == 'Johor' ? 16 : datum.state == 'Pulau Pinang' ? -14 : datum.state == 'Sarawak' ? 14 : datum.state == 'Terengganu' ? -16 : datum.state == 'Kedah' ? 16 : datum.state == 'Kelantan' ? -12 : datum.state == 'Negeri Sembilan' ? 10 : 0",
+      "as": "dy_offset"
+    },
+    {
+      "calculate": "datum.state + ': ' + format(datum.avg_donations, '.0f')",
+      "as": "combined_label"
+    },
+    {
+    "calculate": "datum.avg_donations + (datum.state == 'Perak' ? 0.5 : datum.state == 'Johor' ? -0.8 : datum.state == 'Pulau Pinang' ? 0.1 : datum.state == 'Sarawak' ? -0.2 : datum.state == 'Terengganu' ? -1.8 : datum.state == 'Kedah' ? 1.1 : datum.state == 'Kelantan' ? -0.4 : datum.state == 'Negeri Sembilan' ? -0.1 : 0)",
+    "as": "label_y_left"
+    },
+    {
+    "calculate": "datum.avg_donations + (datum.state == 'Perak' ? 0.5 : datum.state == 'Johor' ? -2.8 : datum.state == 'Pulau Pinang' ? 0.9 : datum.state == 'Sarawak' ? -1.3 : datum.state == 'Terengganu' ? -1.3 : datum.state == 'Kedah' ? 1 : datum.state == 'Kelantan' ? 0.3 : datum.state == 'Negeri Sembilan' ? -0.1 : 0)",
+    "as": "label_y_right"
+    },
+    {"calculate": "toString(datum.year_num)", "as": "year_str"}
+  ],
+  "layer": [
+    {
+      "data": {"values": [{"year_str": "2024"}, {"year_str": "2025"}]},
+      "mark": {"type": "rule", "color": "#dddddd", "strokeWidth": 1.5},
+      "encoding": {
+        "x": {"field": "year_str", "type": "ordinal"}
+      }
+    },
+    {
+      "mark": {"type": "line", "strokeWidth": 2, "opacity": 0.7},
+      "encoding": {
+        "x": {
+          "field": "year_str",
+          "type": "ordinal",
+          "title": null,
+          "axis": {
+            "labelAngle": 0,
+            "labelAlign": "left",
+            "labelOffset": -13,
+            "labelPadding": 7,
+            "labelFont": "Open Sans",
+            "labelFontSize": 13,
+            "labelFontWeight": "bold",
+            "labelColor": "#333333",
+            "grid": false,
+            "domain": false,
+            "ticks": false
+            }
+        },
+        "y": {
+          "field": "avg_donations",
+          "type": "quantitative",
+          "title": "Average Daily Donors",
+          "axis": {
+                "title": "Average Daily Donors",
+                "titleFont": "Open Sans",
+                "labelPadding": 60,
+                "titleFontSize": 12,
+                "labelFont": "Open Sans",
+                "labelFontSize": 11,
+                "grid": false,
+                "domain": false,
+                "ticks": false
+            },
+          "scale": {"domainMin": 0}
+        },
+        "detail": {"field": "state", "type": "nominal"},
+        "color": {
+          "field": "direction",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Increased", "Decreased"],
+            "range": ["#27AE60", "#555555"]
+          },
+          "legend": {
+                "title": "Direction",
+                "orient": "none",
+                "legendX": 290,
+                "legendY": -80,
+                "direction": "vertical",
+                "titleFont": "Open Sans",
+                "labelFont": "Open Sans",
+                "titleFontSize": 12,
+                "labelFontSize": 11
+            }
+        }
+      }
+    },
+    {
+      "mark": {"type": "point", "filled": true, "size": 50, "opacity": 0.9},
+      "encoding": {
+        "x": {"field": "year_str", "type": "ordinal"},
+        "y": {"field": "avg_donations", "type": "quantitative"},
+        "color": {
+          "field": "direction",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Increased", "Decreased"],
+            "range": ["#27AE60", "#555555"]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          {"field": "state", "type": "nominal", "title": "State"},
+          {"field": "year_str", "type": "nominal", "title": "Year"},
+          {"field": "avg_donations", "type": "quantitative",
+            "title": "Average Donors per Day", "format": ".1f"},
+          {"field": "direction", "type": "nominal", "title": "Direction"}
+        ]
+      }
+    },
+    {
+      "transform": [{"filter": "datum.year_str == '2024'"}],
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -10,
+        "fontSize": 10,
+        "font": "Open Sans"
+      },
+      "encoding": {
+        "x": {"field": "year_str", "type": "ordinal"},
+        "y": {"field": "label_y_left", "type": "quantitative"},
+        "text": {"field": "combined_label", "type": "nominal"},
+        
+        "color": {
+          "field": "direction",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Increased", "Decreased"],
+            "range": ["#27AE60", "#555555"]
+          },
+          "legend": null
+        }
+      }
+    },
+    {
+      "transform": [{"filter": "datum.year_str == '2025'"}],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "fontSize": 10,
+        "font": "Open Sans"
+      },
+      "encoding": {
+        "x": {"field": "year_str", "type": "ordinal"},
+        "y": {"field": "label_y_right", "type": "quantitative"},
+        "text": {"field": "combined_label", "type": "nominal"},
+        
+        "color": {
+          "field": "direction",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Increased", "Decreased"],
+            "range": ["#27AE60", "#555555"]
+          },
+          "legend": null
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Open Sans",
+    "view": {"stroke": null}
+  }
+}

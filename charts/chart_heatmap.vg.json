@@ -4,14 +4,17 @@
   "title": {
     "text": "When Do Malaysians Donate Blood?",
     "subtitle": [
-  "Average daily blood donors per state per month from January 2023 to September 2025.",
-  "KL(main capital) averages 560 daily donors — 4 times more than any other state year-round"
+  "Average daily blood donors per state per month",
+  "from January 2023 to September 2025.",
+  "Kuala Lumpur (main capital) averages 560 daily",
+  "donors which about 4 times more than any other state",
+  "year-round."
 ],
     "dy": -13,
     "fontSize": 18,
-    "font": "Open Sans",
+    "font": "Georgia",
     "fontWeight": "bold",
-    "subtitleFontSize": 12,
+    "subtitleFontSize": 13,
     "subtitleFont": "Open Sans",
     "subtitleFontWeight": "normal",
     "subtitleColor": "#666666",
