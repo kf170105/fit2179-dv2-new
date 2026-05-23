@@ -198,7 +198,7 @@
           "type": "nominal",
           "sort": ["Regular Donors", "New Donors", "Irregular Donors"]
         },
-        "text": {"value": ["Malaysia's loyal", "donors growing"]}
+        "text": {"value": ["Malaysia shows a", "growing donor", "loyalty trend"]}
       }
     }
   ],

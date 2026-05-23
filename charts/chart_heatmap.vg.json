@@ -4,11 +4,10 @@
   "title": {
     "text": "When Do Malaysians Donate Blood?",
     "subtitle": [
-  "Average daily blood donors per state per month",
-  "from January 2023 to September 2025.",
-  "Kuala Lumpur (main capital) averages 560 daily",
-  "donors which about 4 times more than any other state",
-  "year-round."
+  "Average daily blood donors per state per month from",
+  "January 2023 to September 2025. Kuala Lumpur (main capital)",
+  "peaks at 624, reflecting highest average donor",
+  "count across the three-year period."
 ],
     "dy": -13,
     "fontSize": 18,
@@ -149,8 +148,8 @@
   
 },
   "encoding": {
-  "x": {"field": "month_num", "type": "ordinal"},
-  "xOffset": {"value": 8},
+  "x": {"field": "month_num", "type": "ordinal", "bandPosition": 0.18},
+  "xOffset": {"value": -8},
   "y": {"value": 390},
   "y2": {"value": 455}
 }
@@ -162,6 +161,7 @@
   "mark": {
     "type": "text",
     "dy": 78,
+    "dx": 10,
     "fontSize": 11,
     "fontWeight": "bold",
     "font": "Open Sans",
@@ -171,7 +171,9 @@
   "encoding": {
     "x": {"field": "month_num", "type": "ordinal"},
     "y": {"field": "state", "type": "nominal", "sort": "-x"},
-    "text": {"value": "Highest average number of donor (624) for Kuala Lumpur during May"}
+    "text": {"value": ["Kuala Lumpur peaks at average 624 in May" ,
+                       "— 4 times above national average — driven by", 
+                    "National Blood Donation campaigns."]}
   }
 }
   ]

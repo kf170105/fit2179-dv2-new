@@ -121,7 +121,7 @@
           "legend": {
                 "title": "Direction",
                 "orient": "none",
-                "legendX": 290,
+                "legendX": 320,
                 "legendY": -80,
                 "direction": "vertical",
                 "titleFont": "Open Sans",

@@ -1,0 +1,275 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "padding": {"top": 10, "bottom": 10, "left": 1, "right": 16},
+  "title": {
+    "text": ["Which States Lead Blood","Donation Rankings?"],
+    "subtitle": [
+      "Kuala Lumpur(KL) dominates rank 1 throughout 2023–2025.",
+      "Johor climbed to rank 2, surpassing Perak in 2025."
+    ],
+    "fontSize": 18,
+    "font": "Georgia",
+    "fontWeight": "bold",
+    "subtitleFontSize": 12,
+    "subtitleFont": "Open Sans",
+    "subtitleFontWeight": "normal",
+    "subtitleColor": "#666666",
+    "color": "#333333",
+    "anchor": "start",
+    "subtitlePadding": 8,
+    "offset": -50
+  },
+  "width": "container",
+  "height": 500,
+  "data": {"url": "data/blood_donations_filtered_dataset1.csv"},
+  "transform": [
+    {"filter": "datum.blood_type == 'all'"},
+    
+    {"calculate": "year(datum.date)", "as": "year_num"},
+    {"filter": "datum.year_num == 2023 || datum.year_num == 2024 || datum.year_num == 2025"},
+    {
+      "aggregate": [{"op": "mean", "field": "donations", "as": "avg_donations"}],
+      "groupby": ["state", "year_num"]
+    },
+    {"calculate": "toString(datum.year_num)", "as": "year_str"},
+    {
+    "calculate": "datum.state == 'Negeri Sembilan' ? 'N. Sembilan' : datum.state == 'Pulau Pinang' ? 'P. Pinang' : datum.state == 'W.P. Kuala Lumpur' ? 'KL' : datum.state",
+    "as": "state_label"
+    },
+    {
+      "window": [{"op": "rank", "as": "rank"}],
+      "sort": [{"field": "avg_donations", "order": "descending"}],
+      "groupby": ["year_str"]
+    },
+    {
+      "window": [
+        {"op": "first_value", "field": "rank", "as": "rank_first"},
+        {"op": "last_value", "field": "rank", "as": "rank_last"}
+      ],
+      "sort": [{"field": "year_num", "order": "ascending"}],
+      "groupby": ["state"],
+      "frame": [null, null]
+    },
+    {
+      "calculate": "datum.rank_last < datum.rank_first ? 'Improved' : datum.rank_last > datum.rank_first ? 'Declined' : 'Stable'",
+      "as": "trend"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {"type": "line", "strokeWidth": 3.5, "opacity": 0.7},
+      "encoding": {
+        "x": {
+          "field": "year_str",
+          "type": "ordinal",
+          "title": null,
+          "axis": {
+            "labelAngle": 0,
+            "labelFont": "Open Sans",
+            "labelFontSize": 13,
+            "labelFontWeight": "bold",
+            "labelColor": "#333333",
+            "grid": false,
+            "domain": true,
+            "domainColor": "#555555",
+            "labelPadding": 2
+          }
+        },
+        "y": {
+          "field": "rank",
+          "type": "quantitative",
+          "title": "Rank",
+          "scale": {"reverse": true, "domain": [1, 12.5]},
+          "axis": {
+            "titleFont": "Open Sans",
+            "titleFontSize": 12,
+            "labelFont": "Open Sans",
+            "labelFontSize": 11,
+            "tickCount": 12,
+            
+            "grid": false,
+            "domain": true,
+            "domainColor": "#555555",
+            "labelPadding": 1
+          }
+        },
+        "detail": {"field": "state", "type": "nominal"},
+        "color": {
+          "field": "trend",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Improved", "Stable", "Declined"],
+            "range": ["#1E8449", "#2980B9", "#555555"]
+          },
+          "legend": {
+            "title": "Rank Change",
+            "orient": "none",
+            "legendX": 380,
+            "legendY": -100,
+            "direction": "vertical",
+            "titleFont": "Open Sans",
+            "titleFontSize": 12,
+            "labelFont": "Open Sans",
+            "labelFontSize": 11,
+            "symbolStrokeWidth": 5,
+            "symbolSize": 200
+            }
+        }
+      }
+    },
+    {
+      "mark": {"type": "point", "filled": true, "size": 120, "opacity": 0.9},
+      "encoding": {
+        "x": {"field": "year_str", "type": "ordinal"},
+        "y": {
+          "field": "rank",
+          "type": "quantitative",
+          "scale": {"reverse": true, "domain": [1, 13.5]}
+        },
+        "color": {
+          "field": "trend",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Improved", "Stable", "Declined"],
+            "range": ["#1E8449", "#aaaaaa", "#555555"]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          {"field": "state", "type": "nominal", "title": "State"},
+          {"field": "year_str", "type": "nominal", "title": "Year"},
+          {"field": "rank", "type": "quantitative", "title": "Rank"},
+          {"field": "avg_donations", "type": "quantitative",
+            "title": "Average number of Donors/Day", "format": ".1f"},
+          {"field": "trend", "type": "nominal", "title": "Trend"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 9,
+        "font": "Open Sans",
+        "fontWeight": "normal",
+        "color": "white"
+      },
+      "encoding": {
+        "x": {"field": "year_str", "type": "ordinal"},
+        "y": {
+          "field": "rank",
+          "type": "quantitative",
+          "scale": {"reverse": true, "domain": [1, 13.5]}
+        },
+        "text": {"field": "rank", "type": "quantitative"}
+      }
+    },
+    {
+      "transform": [{"filter": "datum.year_str == '2023'"}],
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -7,
+        "fontSize": 10,
+        "font": "Open Sans"
+      },
+      "encoding": {
+        "x": {"field": "year_str", "type": "ordinal"},
+        "y": {
+          "field": "rank",
+          "type": "quantitative",
+          "scale": {"reverse": true, "domain": [1, 13.5]}
+        },
+        "text": {"field": "state_label", "type": "nominal"},
+        "color": {
+          "field": "trend",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Improved", "Stable", "Declined"],
+            "range": ["#1E8449", "#aaaaaa", "#555555"]
+          },
+          "legend": null
+        }
+      }
+    },
+    {
+      "transform": [{"filter": "datum.year_str == '2025'"}],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 12,
+        "fontSize": 10,
+        "font": "Open Sans"
+      },
+      "encoding": {
+        "x": {"field": "year_str", "type": "ordinal"},
+        "y": {
+          "field": "rank",
+          "type": "quantitative",
+          "scale": {"reverse": true, "domain": [1, 13.5]}
+        },
+        "text": {"field": "state_label", "type": "nominal"},
+        "color": {
+          "field": "trend",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Improved", "Stable", "Declined"],
+            "range": ["#1E8449", "#aaaaaa", "#555555"]
+          },
+          "legend": null
+        }
+      }
+    },
+    {
+    "transform": [
+        {"filter": "datum.state == 'Johor' && datum.year_str == '2025'"}
+    ],
+    "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 43,
+        "dy": 2,
+        "fontSize": 10,
+        "font": "Open Sans",
+        "fontWeight": "bold",
+        "color": "#27AE60"
+    },
+    "encoding": {
+            "x": {"field": "year_str", "type": "ordinal"},
+        "y": {
+        "field": "rank",
+        "type": "quantitative",
+        "scale": {"reverse": true, "domain": [1, 13.5]}
+        },
+        "text": {"value": ["Johor overtakes","Perak in 2025"]}
+        }
+    },
+    {
+      "transform": [
+        {"filter": "datum.state == 'Perak' && datum.year_str == '2023'"}
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 5,
+        "dy": -14,
+        "fontSize": 10,
+        "font": "Open Sans",
+        "fontWeight": "bold",
+        "color": "#555555"
+      },
+      "encoding": {
+        "x": {"field": "year_str", "type": "ordinal"},
+        "y": {
+          "field": "rank",
+          "type": "quantitative",
+          "scale": {"reverse": true, "domain": [1, 13.5]}
+        },
+        "text": {"value": "Perak held rank 2 until Johor surged in 2025"}
+      }
+    }
+  ],
+  "config": {
+    "font": "Open Sans",
+    "view": {"stroke": null}
+  }
+}

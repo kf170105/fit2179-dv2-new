@@ -1,10 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "padding": {"top": 5, "bottom": 20, "left": -0.7, "right": 4.3},
   "title": {
-    "text": "Which Malaysian States Are Improving Blood Donations?",
+    "text": ["Which Malaysian States Are Improving","Blood Donations?"],
     "subtitle": [
-      "Growth rate in average daily donors from 2023 to 2024.",
-      "Positive = more donors in 2024. Negative = fewer donors."
+      "Growth rate in average daily donors from 2023","to 2024. Positive = more donors in 2024.",
+      "Negative = fewer donors."
     ],
     "fontSize": 18,
     "font": "Georgia",
@@ -16,9 +17,9 @@
     "color": "#333333",
     "anchor": "start",
     "subtitlePadding": 8,
-    "offset": 30
+    "offset": -50
   },
-  "width": 500,
+  "width": "container",
   "height": 400,
   "data": {
     "url": "data/blood_donations_filtered_dataset1.csv"
@@ -104,12 +105,13 @@
           "title": "Growth Rate of Blood Donation (%)",
           "scale": {"domain": [-10, 14]},
           "axis": {
-            "format": "+.0f",
+            "format": ".0f",
             "titleFont": "Open Sans",
             "titleFontSize": 12,
             "labelFont": "Open Sans",
             "labelFontSize": 11,
-            "grid": false
+            "grid": false,
+            "labelPadding": 20
           }
         },
         "y": {
@@ -121,7 +123,9 @@
     "titleFont": "Open Sans",
     "titleFontSize": 12,
     "labelFont": "Open Sans",
-    "labelFontSize": 11
+    "labelFontSize": 11,
+    "labelPadding": 5,
+    "offset": 3
   }
         },
         "size": {
@@ -130,12 +134,16 @@
           "scale": {"range": [50, 500]},
           "legend": {
             "title": "Average Daily Donors in 2024",
-            "orient": "right",
+            "orient": "none",
+            "legendX":225,
+            "legendY":-170,
             "offset": 55,
             "titleFont": "Open Sans",
             "labelFont": "Open Sans",
-            "titleFontSize": 11,
+            "symbolSize": 100,
+            "titleFontSize": 10,
             "labelFontSize": 10
+            
           }
         },
         "color": {
@@ -225,7 +233,7 @@
       "text": {
         "field": "growth_rate",
         "type": "quantitative",
-        "format": "+.1f"
+        "format": ".1f"
       }
     }
   },
@@ -250,7 +258,7 @@
       "type": "nominal",
       "sort": {"field": "growth_rate", "order": "descending"}
     },
-    "text": {"value": "Most improved"}
+    "text": {"value": ["Most improved","driven by rural", "outreach campaigns"]}
   }
 },
     {
@@ -263,9 +271,9 @@
         "font": "Open Sans",
         "fontWeight": "bold",
         "color": "#555555",
-        "align": "right",
-        "dx": -9,
-        "dy": 0
+        "align": "left",
+        "dx": -55,
+        "dy": -10
       },
       "encoding": {
         "x": {"field": "growth_rate", "type": "quantitative"},
@@ -274,7 +282,7 @@
           "type": "nominal",
           "sort": {"field": "growth_rate", "order": "descending"}
         },
-        "text": {"value": "Needs attention"}
+        "text": {"value": ["Needs","attention"]}
       }
     }
   ],
