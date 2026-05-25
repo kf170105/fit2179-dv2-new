@@ -21,7 +21,7 @@
     "anchor": "start",
     "subtitlePadding": 8
   },
-  "width": 700,
+  "width": 800,
   "height": 400,
   "data": {
     "url": "data/blood_donations_filtered_dataset1.csv"

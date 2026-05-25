@@ -1,6 +1,7 @@
 var choropleth_map = "charts/map1_choropleth.vg.json";
 var heatmap = "charts/chart_heatmap.vg.json";
 var stacked_area = "charts/chart_area_multiples.vg.json";
+var bubble = "charts/chart_bubble.vg.json";
 var dumbbell = "charts/chart_dumbbell.vg.json";
 var lollipop = "charts/chart_lollipop.vg.json";
 var bump = "charts/chart_bump.vg.json";
@@ -18,6 +19,10 @@ vegaEmbed("#stacked_area", stacked_area, {"actions": false})
   .then(function(result){})
   .catch(console.error);
 
+vegaEmbed("#bubble", bubble, {"actions": false, "width": "container"})
+  .then(function(result){})
+  .catch(console.error);
+  
 vegaEmbed("#dumbbell", dumbbell, {"actions": false})
   .then(function(result){})
   .catch(console.error);
@@ -33,3 +38,4 @@ vegaEmbed("#bump", bump, {"actions": false, "width": "container"})
 vegaEmbed("#slope", slope, {"actions": false, "width": "container"})
   .then(function(result){})
   .catch(console.error);
+

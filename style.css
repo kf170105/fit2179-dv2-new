@@ -61,16 +61,31 @@ p {
 
 /* SECTION LABEL */
 .section-label {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 700;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Georgia',Georgia;
   color: #333333;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
+  letter-spacing: 0px;
+  
   margin-bottom: 16px;
   border-left: 3px solid #E74C3C;
   padding-left: 10px;
   margin-top: 70px;
+}
+
+.section-intro {
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  color: #555555;
+  line-height: 1.6;
+  margin: 20px 0;
+  max-width: 700px;
+}
+
+.section-divider {
+  border: none;
+  border-top: 1px solid #aaaaaa;
+  margin: 0px 0 35px 0;
 }
 
 /* HERO SECTION */

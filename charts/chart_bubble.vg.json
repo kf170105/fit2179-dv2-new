@@ -1,0 +1,210 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "How Do Malaysian Hospitals Balance Donor Types?",
+    "subtitle": [
+      "Each bubble = one hospital. Size = total daily donations.",
+      "Blue = Peninsular Malaysia. Orange = East Malaysia.",
+      "                                                   ",
+      "Quadrant bubble chart is separated into 4 zones:",
+      "Star Zone: most new + return donors daily",
+      "Loyal Zone: Only few new donors but donors keep coming back",
+      "Acquire Zone: many new donors but only few return again",
+      "Develop Zone: less in both — urgent campaigns needed"
+    ],
+    "fontSize": 18,
+    "font": "Georgia",
+    "fontWeight": "bold",
+    "subtitleFontSize": 12,
+    "subtitleFont": "Open Sans",
+    "subtitleFontWeight": "normal",
+    "subtitleColor": "#666666",
+    "color": "#333333",
+    "anchor": "start",
+    "subtitlePadding": 8,
+    "offset": -100
+  },
+  "width": "container",
+  "height": 450,
+  "data": {
+    "url": "data/donations_facility_dataset2_clean.csv"
+  },
+  "transform": [
+    {"filter": "datum.daily > 0"},
+    
+    {
+      "aggregate": [
+        {"op": "mean", "field": "donations_new", "as": "avg_new"},
+        {"op": "mean", "field": "donations_regular", "as": "avg_regular"},
+        {"op": "mean", "field": "daily", "as": "avg_daily"}
+      ],
+      "groupby": ["hospital", "state"]
+    },
+    {
+      "calculate": "datum.hospital == 'Hospital Queen Elizabeth II' || datum.hospital == 'Hospital Duchess Of Kent' || datum.hospital == 'Hospital Tawau' || datum.hospital == 'Hospital Umum Sarawak' || datum.hospital == 'hospital Miri' || datum.hospital == 'Hospital Sibu' ? 'East Malaysia' : 'Peninsular Malaysia'",
+      "as": "region"
+    },
+    {
+      "joinaggregate": [
+        {"op": "median", "field": "avg_new", "as": "median_new"},
+        {"op": "median", "field": "avg_regular", "as": "median_regular"}
+      ]
+    }
+  ],
+  "layer": [
+    {
+  "mark": {
+    "type": "rule",
+    "strokeDash": [4, 4],
+    "color": "#cccccc",
+    "strokeWidth": 1.5
+  },
+  "encoding": {
+    "x": {
+      "field": "median_new",
+      "type": "quantitative"
+    }
+  }
+},
+{
+  "mark": {
+    "type": "rule",
+    "strokeDash": [4, 4],
+    "color": "#cccccc",
+    "strokeWidth": 1.5
+  },
+  "encoding": {
+    "y": {
+      "field": "median_regular",
+      "type": "quantitative"
+    }
+  }
+},
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "opacity": 0.6,
+        "stroke": "white",
+        "strokeWidth": 0.5
+      },
+      "encoding": {
+        "x": {
+          "field": "avg_new",
+          "type": "quantitative",
+          "title": "Average New Donors per Day",
+          
+          "axis": {
+            "titleFont": "Open Sans",
+            "titleFontSize": 12,
+            "labelFont": "Open Sans",
+            "labelFontSize": 11,
+            "grid": false
+          }
+        },
+        "y": {
+          "field": "avg_regular",
+          "type": "quantitative",
+          "title": "Average Regular Donors per Day",
+          "axis": {
+            "titleFont": "Open Sans",
+            "titleFontSize": 12,
+            "labelFont": "Open Sans",
+            "labelFontSize": 11,
+            "grid": false
+          }
+        },
+        "size": {
+          "field": "avg_daily",
+          "type": "quantitative",
+          "title": "Total Daily Donors",
+          "scale": {"range": [10, 1500]},
+          "legend": {
+          "title": "Total Daily Donors",
+          "orient": "none",
+          "legendX": 900,
+          "legendY": -215,
+          "titleFont": "Open Sans",
+          "labelFont": "Open Sans",
+          "titleFontSize": 11,
+          "labelFontSize": 9
+        }
+        },
+        "color": {
+          "field": "region",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Peninsular Malaysia", "East Malaysia"],
+            "range": ["#2980B9", "#E67E22"]
+          },
+          "legend": {
+            "title": "Region",
+            "orient": "none",
+            "legendX": 760,
+            "legendY": -215,
+            "titleFont": "Open Sans",
+            "labelFont": "Open Sans",
+            "titleFontSize": 12,
+            "labelFontSize": 11,
+            "direction": "vertical"
+          }
+        },
+        "tooltip": [
+          {"field": "hospital", "type": "nominal", "title": "Hospital"},
+          
+          {"field": "avg_new", "type": "quantitative",
+            "title": "Avg New Donors/Day", "format": ".1f"},
+          {"field": "avg_regular", "type": "quantitative",
+            "title": "Avg Regular Donors/Day", "format": ".1f"},
+          {"field": "avg_daily", "type": "quantitative",
+            "title": "Total Daily Donors", "format": ".1f"}
+        ]
+      }
+    },
+    {
+  "data": {
+    "values": [
+      {"x": 15, "y": 390, "label": "Star Zone"},
+      {"x": 4, "y": 390, "label": "Loyal Zone"},
+      {"x": 18, "y": 18, "label": "Acquire Zone"},
+      {"x": 5, "y": 5, "label": "Develop Zone"}
+    ]
+  },
+  "mark": {
+    "type": "text",
+    "fontSize": 13,
+    "font": "Open Sans",
+    
+    "color": "#000000",
+    "fontWeight": "bold"
+  },
+  "encoding": {
+    "x": {"field": "x", "type": "quantitative"},
+    "y": {"field": "y", "type": "quantitative"},
+    "text": {"field": "label", "type": "nominal"}
+  }
+},
+{
+  "data": {"values": [{}]},
+  "mark": {
+    "type": "text",
+    "fontSize": 10,
+    "font": "Open Sans",
+    "fontWeight": "bold",
+    "color": "#7B241C",
+    "align": "left",
+    "x": 800,
+    "y": 25
+  },
+  "encoding": {
+    "text": {
+      "value": ["Pusat Darah Negara: 568 donors","per day — national OUTLIER with","most donor per day. Blood hub", "centralising supply nationwide"]
+    }
+  }
+}
+  ],
+  "config": {
+    "font": "Open Sans",
+    "view": {"stroke": null}
+  }
+}

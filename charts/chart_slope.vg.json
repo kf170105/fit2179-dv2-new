@@ -79,6 +79,7 @@
           "field": "year_str",
           "type": "ordinal",
           "title": null,
+          "scale": {"paddingOuter": 0},
           "axis": {
             "labelAngle": 0,
             "labelAlign": "left",
