@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "How Do Malaysian Hospitals Balance Donor Types?",
+    "text": "How Do Malaysian Hospitals Acquire and Retain Donors?",
     "subtitle": [
       "Each bubble = one hospital. Size = total daily donations.",
       "Blue = Peninsular Malaysia. Orange = East Malaysia.",
@@ -153,9 +153,9 @@
           {"field": "hospital", "type": "nominal", "title": "Hospital"},
           
           {"field": "avg_new", "type": "quantitative",
-            "title": "Avg New Donors/Day", "format": ".1f"},
+            "title": "Average New Donors per Day", "format": ".1f"},
           {"field": "avg_regular", "type": "quantitative",
-            "title": "Avg Regular Donors/Day", "format": ".1f"},
+            "title": "Average Regular Donors perDay", "format": ".1f"},
           {"field": "avg_daily", "type": "quantitative",
             "title": "Total Daily Donors", "format": ".1f"}
         ]

@@ -11,7 +11,7 @@ vegaEmbed("#choropleth_map", choropleth_map, {"actions": false})
   .then(function(result){})
   .catch(console.error);
 
-vegaEmbed("#heatmap", heatmap, {"actions": false})
+vegaEmbed("#heatmap", heatmap, {"actions": false, "width": "container"})
   .then(function(result){})
   .catch(console.error);
 
