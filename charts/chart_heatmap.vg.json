@@ -20,10 +20,10 @@
     "color": "#333333",
     "anchor": "start",
     "subtitlePadding": 8,
-    "offset": -60
+    "offset": -50
   },
   "width": "container",
-  "height": 400,
+  "height": 450,
   "data": {
     "url": "data/blood_donations_filtered_dataset1.csv"
   },
@@ -90,7 +90,7 @@
   "legend": {
     "title": "Average Donor per Day",
     "orient": "none",
-    "legendX": 275,
+    "legendX": 278.5,
     "legendY": -120,
     "titleFontSize": 12,
     "titleFont": "Open Sans",
@@ -155,8 +155,8 @@
   "encoding": {
   "x": {"field": "month_num", "type": "ordinal", "bandPosition": 0.13},
   "xOffset": {"value": -8},
-  "y": {"value": 390},
-  "y2": {"value": 455}
+  "y": {"value": 435},
+  "y2": {"value": 505}
 }
 },
 {

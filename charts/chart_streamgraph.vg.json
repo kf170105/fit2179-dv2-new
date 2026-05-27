@@ -1,0 +1,158 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "How Do Blood Type Donations Trend Over Time?",
+    "subtitle": [
+      "Monthly blood type donation volumes across all hospitals",
+      "from 2023 to 2025.","Wider layer = higher donation volume of that blood type.",
+      "Drag slider to compare years."
+    ],
+    "fontSize": 18,
+    "font": "Georgia",
+    "fontWeight": "bold",
+    "subtitleFontSize": 12,
+    "subtitleFont": "Open Sans",
+    "subtitleFontWeight": "normal",
+    "subtitleColor": "#666666",
+    "color": "#333333",
+    "anchor": "start",
+    "subtitlePadding": 8,
+    "offset": -50
+  },
+  "width": "container",
+  "height": 500,
+  "padding": {"top": 2.5, "bottom": 20, "left": 10, "right": 10},
+  "data": {"url": "data/donations_facility_dataset2_clean.csv"},
+  "params": [
+    {
+        "name": "Year_Selection",
+        "value": 2024,
+        "bind": {
+        "input": "range",
+        "min": 2023,
+        "max": 2025,
+        "step": 1,
+        "name": "Select Year: "
+        }
+    }
+    ],
+  "transform": [
+  {"filter": "year(toDate(datum.date_iso)) == Year_Selection"},
+  {
+    "fold": ["blood_ab", "blood_a", "blood_b", "blood_o"],
+    "as": ["blood_type", "donations"]
+  },
+  {
+    "calculate": "datum.blood_type == 'blood_a' ? 'Type A' : datum.blood_type == 'blood_b' ? 'Type B' : datum.blood_type == 'blood_o' ? 'Type O' : 'Type AB'",
+    "as": "blood_label"
+  }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "area",
+        "interpolate": "monotone",
+        "opacity": 0.9
+      },
+      "encoding": {
+        "x": {
+          "field": "date_iso",
+          "type": "temporal",
+          "timeUnit": "yearmonth",
+          "title": "Month",
+          "axis": {
+            "titleFont": "Open Sans",
+            "titleFontSize": 12,
+            "labelFont": "Open Sans",
+            "labelFontSize": 11,
+            "grid": false,
+            "format": "%b"
+          }
+        },
+        "y": {
+          "field": "donations",
+          "type": "quantitative",
+          "aggregate": "sum",
+          "stack": "center",
+          "title": null,
+          "axis": {
+            "title": "Donation Volume",
+            "titleFont": "Open Sans",
+            "titleFontSize": 12,
+            "labels": false,
+            "ticks": false
+            }
+        },
+        "color": {
+          "field": "blood_label",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Type O", "Type A", "Type B", "Type AB"],
+            "range": ["#C0392B", "#69F5D2", "#2980B9", "#8E44AD"]
+          },
+          "legend": {
+            "title": "Blood Type",
+            "orient": "none",
+            "legendX": 390,
+            "legendY":-100,
+            "titleFont": "Open Sans",
+            "labelFont": "Open Sans",
+            "titleFontSize": 12,
+            "labelFontSize": 11
+          }
+        },
+        "tooltip": [
+          {"field": "blood_label", "type": "nominal",
+            "title": "Blood Type"},
+          {"field": "date_iso", "type": "temporal",
+            "timeUnit": "yearmonth", "title": "Month",
+            "format": "%B %Y"},
+          {"field": "donations", "type": "quantitative",
+            "aggregate": "sum", "title": "Total Donations",
+            "format": ",.0f"}
+        ]
+      }
+    },
+    {
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "fontSize": 10,
+        "font": "Open Sans",
+        "fontWeight": "bold",
+        "color": "#000000",
+        "align": "left",
+        "x": 30,
+        "y": 380
+      },
+      "encoding": {
+        "text": {
+          "value": "• Type O dominates — most common blood type donated nationally"
+        }
+      }
+    },
+    {
+    "data": {"values": [{}]},
+    "mark": {
+        "type": "text",
+        "fontSize": 9,
+        "font": "Open Sans",
+        "fontWeight": "bold",
+        "color": "#000000",
+        "align": "left",
+        "x": 146,
+        "y": 162
+    },
+    "encoding": {
+        "text": {
+        "value": "• Type AB — rarest blood type"
+        }
+    }
+    }
+  ],
+  "config": {
+    "font": "Open Sans",
+    "view": {"stroke": null},
+    "axis": {"grid": false}
+    }
+}

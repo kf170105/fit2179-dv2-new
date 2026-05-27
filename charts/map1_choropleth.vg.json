@@ -14,16 +14,21 @@
     "anchor": "start",
     "subtitlePadding": 5
   },
-  "width": 800,
-  "height": 450,
+  "width": 950,
+  "height": 550,
   "projection": {
     "type": "equirectangular",
-    "center": [114.5, 2.5],
+    "center": [
+      114.5,
+      2.5
+    ],
     "scale": 1500
   },
   "layer": [
     {
-      "data": {"sphere": true},
+      "data": {
+        "sphere": true
+      },
       "mark": {
         "type": "geoshape",
         "fill": "#EBF5FB",
@@ -50,17 +55,29 @@
         "url": "data/blood_donations_filtered_dataset1.csv"
       },
       "transform": [
-        {"filter": "datum.blood_type == 'all'"},
+        {
+          "filter": "datum.blood_type == 'all'"
+        },
         {
           "calculate": "datum.state == 'W.P. Kuala Lumpur' ? 'Kuala Lumpur' : datum.state",
           "as": "state_name"
         },
         {
           "aggregate": [
-  {"op": "mean", "field": "donations", "as": "avg_daily_donations"},
-  {"op": "sum", "field": "donations", "as": "total_donations"}
-],
-          "groupby": ["state_name"]
+            {
+              "op": "mean",
+              "field": "donations",
+              "as": "avg_daily_donations"
+            },
+            {
+              "op": "sum",
+              "field": "donations",
+              "as": "total_donations"
+            }
+          ],
+          "groupby": [
+            "state_name"
+          ]
         },
         {
           "calculate": "datum.avg_daily_donations < 30 ? 'Under 30' : datum.avg_daily_donations < 60 ? '30–60' : datum.avg_daily_donations < 90 ? '60–90' : datum.avg_daily_donations < 120 ? '90–120' : 'Above 120'",
@@ -77,9 +94,17 @@
               }
             },
             "key": "properties.name",
-            "fields": ["type", "properties", "geometry"]
+            "fields": [
+              "type",
+              "properties",
+              "geometry"
+            ]
           },
-          "as": ["type", "properties", "geo"]
+          "as": [
+            "type",
+            "properties",
+            "geo"
+          ]
         }
       ],
       "mark": {
@@ -96,11 +121,26 @@
           "field": "donation_category",
           "type": "ordinal",
           "scale": {
-            "domain": ["Above 120", "90–120", "60–90", "30–60", "Under 30"],
-            "range": ["#7B241C", "#C0392B", "#E74C3C", "#F1948A", "#FADBD8"]
+            "domain": [
+              "Above 120",
+              "90–120",
+              "60–90",
+              "30–60",
+              "Under 30"
+            ],
+            "range": [
+              "#7B241C",
+              "#C0392B",
+              "#E74C3C",
+              "#F1948A",
+              "#FADBD8"
+            ]
           },
           "legend": {
-            "title": "Average Blood Donor per Day",
+            "title": [
+              "Average Blood Donor",
+              "per Day"
+            ],
             "orient": "right",
             "offset": 10,
             "titleFont": "Open Sans",
@@ -111,20 +151,100 @@
           }
         },
         "tooltip": [
-  {"field": "state_name", "type": "nominal", "title": "State"},
-  {
-    "field": "avg_daily_donations",
-    "type": "quantitative",
-    "title": "Average Blood Donor per Day",
-    "format": ".1f"
-  },
-  {
-    "field": "total_donations",
-    "type": "quantitative",
-    "title": "Total Blood Donors",
-    "format": ","
-  }
-]
+          {
+            "field": "state_name",
+            "type": "nominal",
+            "title": "State"
+          },
+          {
+            "field": "avg_daily_donations",
+            "type": "quantitative",
+            "title": "Average Blood Donor per Day",
+            "format": ".1f"
+          },
+          {
+            "field": "total_donations",
+            "type": "quantitative",
+            "title": "Total Blood Donors",
+            "format": ","
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "longitude": 106.8,
+            "latitude": 8.8
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "font": "Open Sans",
+        "fontWeight": "normal",
+        "color": "#333333",
+        "fontStyle": "italic",
+        "align": "left",
+        "lineHeight":15,
+        "lineBreak": "\n"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "text": {
+          "value": "Malaysia records 1,800+ donors/day —\nmeeting WHO's 1% population target.\nYet 12 states vary widely, showing\ndeep gaps that need urgent campaigns."
+        }
+      }
+    },
+    {
+      "data": {"values": [{"longitude": 103.7, "latitude": 5.5}]},
+      "mark": {
+        "type": "text",
+        "fontSize": 10,
+        "font": "Open Sans",
+        "fontWeight": "bold",
+        "color": "#7B241C",
+        "align": "left",
+        "fontStyle": "italic",
+        "lineBreak": "\n",
+        "lineHeight": 14
+      },
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        "text": {
+          "value": "West Malaysia leads\n nationally in donations\n especially in state Kuala Lumpur,\n Perak and Johor."
+        }
+      }
+    },
+    {
+      "data": {"values": [{"longitude": 118.9, "latitude": 4.5}]},
+      "mark": {
+        "type": "text",
+        "fontSize": 10,
+        "font": "Open Sans",
+        "fontWeight": "bold",
+        "color": "#E74C3C",
+        "fontStyle": "italic",
+        "align": "left",
+        "lineBreak": "\n",
+        "lineHeight": 14
+      },
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        "text": {
+          "value": "East Malaysia\ndonates less due to\ngeographic barriers"
+        }
       }
     }
   ]

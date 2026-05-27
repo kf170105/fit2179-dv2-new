@@ -149,18 +149,54 @@
       ],
       "layer": [
         {
-          "mark": {"type": "rule", "strokeDash": [4, 2], "color": "#333333", "strokeWidth": 1.5},
+          "mark": {"type": "rule",  "color": "#E67E22", "strokeWidth": 1.5},
           "encoding": {
             "x": {"field": "year_month", "type": "temporal", "timeUnit": "yearmonth"},
             "y": {"field": "monthly_total", "type": "quantitative"},
-            "y2": {"value": -15}
+            "y2": {"value": -19}
           }
         },
         {
-          "mark": {"type": "text", "fontSize": 10, "font": "Open Sans", "fontWeight": "bold", "color": "#333333", "align": "left", "dx": -50, "y": -25},
+          "mark": {"type": "text", "fontSize": 10, "font": "Open Sans", "fontWeight": "bold", "color": "#E67E22", "align": "left", "dx": -50, "y": -25},
           "encoding": {
             "x": {"field": "year_month", "type": "temporal", "timeUnit": "yearmonth"},
             "text": {"field": "peak_label", "type": "nominal"}
+          }
+        }
+      ]
+    },
+    {
+      "transform": [
+        {"timeUnit": "yearmonth", "field": "date_iso", "as": "year_month"},
+        {
+          "aggregate": [{"op": "sum", "field": "count_num", "as": "monthly_total"}],
+          "groupby": ["year_month", "donor_group"]
+        },
+        {
+          "window": [{"op": "max", "field": "monthly_total", "as": "peak"}],
+          "groupby": ["donor_group"],
+          "frame": [null, null]
+        },
+        {"filter": "datum.monthly_total == datum.peak && datum.donor_group == 'Police & Army'"},
+        {
+          "calculate": "'Peak: ' + format(datum.monthly_total, '.0f') + ' donors — sudden rise, still fewest nationally'",
+          "as": "peak_label_army"
+        }
+      ],
+      "layer": [
+        {
+          "mark": {"type": "rule", "color": "#8E44AD", "strokeWidth": 1.5},
+          "encoding": {
+            "x": {"field": "year_month", "type": "temporal", "timeUnit": "yearmonth"},
+            "y": {"field": "monthly_total", "type": "quantitative"},
+            "y2": {"value": -19}
+          }
+        },
+        {
+          "mark": {"type": "text", "fontSize": 10, "font": "Open Sans", "fontWeight": "bold", "color": "#8E44AD", "align": "left", "dx": -50, "y": -25},
+          "encoding": {
+            "x": {"field": "year_month", "type": "temporal", "timeUnit": "yearmonth"},
+            "text": {"field": "peak_label_army", "type": "nominal"}
           }
         }
       ]
