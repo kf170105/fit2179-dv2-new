@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "Which Malaysian State Donates the Most Blood?",
-    "subtitle": "Average blood donors per day per state, from January 2023 to September 2025",
+    "subtitle": ["Average blood donors per day per state, from January 2023 to September 2025.","Drag slider to compare years."],
     "dy": -20,
     "fontSize": 18,
     "font": "Georgia",
@@ -18,12 +18,47 @@
   "height": 550,
   "projection": {
     "type": "equirectangular",
-    "center": [
-      114.5,
-      2.5
-    ],
+    "center": [114.5,2.5],
     "scale": 1500
   },
+  "params": [
+    {
+      "name": "Year_Selection",
+      "value": 2024,
+      "bind": {
+        "input": "range",
+        "min": 2023,
+        "max": 2025,
+        "step": 1,
+        "name": "Select Year: "
+      }
+    },
+    {
+      "name": "State_Selection",
+      "value": "All",
+      "bind": {
+        "input": "select",
+        "options": [
+          "All",
+          "Johor",
+          "Kedah",
+          "Kelantan",
+          "Kuala Lumpur",
+          "Melaka",
+          "Negeri Sembilan",
+          "Pahang",
+          "Perak",
+          "Perlis",
+          "Pulau Pinang",
+          "Sabah",
+          "Sarawak",
+          "Selangor",
+          "Terengganu"
+        ],
+        "name": "Select State: "
+      }
+    }
+  ],
   "layer": [
     {
       "data": {
@@ -58,6 +93,7 @@
         {
           "filter": "datum.blood_type == 'all'"
         },
+        {"filter": "year(datum.date) == Year_Selection"},
         {
           "calculate": "datum.state == 'W.P. Kuala Lumpur' ? 'Kuala Lumpur' : datum.state",
           "as": "state_name"
@@ -116,6 +152,13 @@
         "shape": {
           "field": "geo",
           "type": "geojson"
+        },
+        "opacity": {
+          "condition": {
+            "test": "State_Selection == 'All' || datum.state_name == State_Selection",
+            "value": 1
+          },
+          "value": 0.15
         },
         "color": {
           "field": "donation_category",
