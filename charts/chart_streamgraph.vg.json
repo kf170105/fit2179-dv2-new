@@ -97,7 +97,7 @@
           "legend": {
             "title": "Blood Type",
             "orient": "none",
-            "legendX": 560,
+            "legendX": 490,
             "legendY":-100,
             "titleFont": "Open Sans",
             "labelFont": "Open Sans",

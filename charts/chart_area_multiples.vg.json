@@ -67,15 +67,15 @@
     }
   },
   "columns": 1,
-  "spacing": 65,
+  "spacing": 45,
   "resolve": {
   "scale": {"y": "independent"},
   "axis": {"x": "independent"}
 },
   
   "spec": {
-  "width": 1450,
-  "height": 200,
+  "width": 1290,
+  "height": 90,
   "layer": [
     {
       "mark": {

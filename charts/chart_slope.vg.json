@@ -20,7 +20,7 @@
     "offset": -30
   },
   "width": "container",
-  "height": 450,
+  "height": 385,
   "data": {"url": "data/blood_donations_filtered_dataset1.csv"},
   "transform": [
     {"filter": "datum.blood_type == 'all'"},
@@ -122,7 +122,7 @@
           "legend": {
                 "title": "Direction",
                 "orient": "none",
-                "legendX": 510,
+                "legendX": 460,
                 "legendY": -80,
                 "direction": "vertical",
                 "titleFont": "Open Sans",
@@ -216,7 +216,7 @@
         "fontStyle": "italic",
         "color": "#27AE60",
         "align": "left",
-        "x": 160,
+        "x": 130,
         "y": -30,
         "lineBreak": "\n"
       },

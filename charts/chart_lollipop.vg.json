@@ -20,7 +20,7 @@
     "offset": -50
   },
   "width": "container",
-  "height": 400,
+  "height": 350,
   "data": {
     "url": "data/blood_donations_filtered_dataset1.csv"
   },
@@ -135,8 +135,8 @@
           "legend": {
             "title": "Average Daily Donors in 2024",
             "orient": "none",
-            "legendX":425,
-            "legendY":-170,
+            "legendX":415,
+            "legendY":-150,
             "offset": 55,
             "titleFont": "Open Sans",
             "labelFont": "Open Sans",

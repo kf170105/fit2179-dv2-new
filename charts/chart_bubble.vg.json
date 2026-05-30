@@ -22,10 +22,10 @@
     "color": "#333333",
     "anchor": "start",
     "subtitlePadding": 8,
-    "offset": -100
+    "offset": -150
   },
   "width": "container",
-  "height": 450,
+  "height": 337,
   "data": {
     "url": "data/donations_facility_dataset2_clean.csv"
   },
@@ -122,12 +122,12 @@
           "legend": {
           "title": "Total Daily Donors",
           "orient": "none",
-          "legendX": 1300,
-          "legendY": -215,
+          "legendX": 1250,
+          "legendY": -250,
           "titleFont": "Open Sans",
           "labelFont": "Open Sans",
-          "titleFontSize": 11,
-          "labelFontSize": 9
+          "titleFontSize": 10,
+          "labelFontSize": 8
         }
         },
         "color": {
@@ -141,11 +141,11 @@
             "title": "Region",
             "orient": "none",
             "legendX": 1100,
-            "legendY": -215,
+            "legendY": -250,
             "titleFont": "Open Sans",
             "labelFont": "Open Sans",
-            "titleFontSize": 12,
-            "labelFontSize": 11,
+            "titleFontSize": 11,
+            "labelFontSize": 10,
             "direction": "vertical"
           }
         },
@@ -167,12 +167,12 @@
       {"x": 15, "y": 390, "label": "Star Zone"},
       {"x": 4, "y": 390, "label": "Loyal Zone"},
       {"x": 18, "y": 18, "label": "Acquire Zone"},
-      {"x": 5, "y": 5, "label": "Develop Zone"}
+      {"x": 7.5, "y": 5, "label": "Develop Zone"}
     ]
   },
   "mark": {
     "type": "text",
-    "fontSize": 13,
+    "fontSize": 10,
     "font": "Open Sans",
     
     "color": "#000000",
@@ -193,7 +193,7 @@
     "fontWeight": "bold",
     "color": "#7B241C",
     "align": "left",
-    "x": 1200,
+    "x": 1085,
     "y": 25
   },
   "encoding": {

@@ -21,8 +21,8 @@
     "anchor": "start",
     "subtitlePadding": 8
   },
-  "width": 550,
-  "height": 350,
+  "width": 510,
+  "height": 280,
   "data": {
     "url": "data/donations_facility_dataset2_clean.csv"
   },
@@ -105,7 +105,7 @@
           "legend": {
             "title": "Year",
             "orient": "none",
-            "legendX": 560,
+            "legendX": 500,
             "legendY": -90,
             "titleFont": "Open Sans",
             "labelFont": "Open Sans",
