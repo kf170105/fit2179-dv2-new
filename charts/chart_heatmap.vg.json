@@ -90,7 +90,7 @@
   "legend": {
     "title": "Average Donor per Day",
     "orient": "none",
-    "legendX": 278.5,
+    "legendX": 487.5,
     "legendY": -120,
     "titleFontSize": 12,
     "titleFont": "Open Sans",
@@ -177,7 +177,7 @@
     "x": {"field": "month_num", "type": "ordinal"},
     "y": {"field": "state", "type": "nominal", "sort": "-x"},
     "text": {"value": ["Kuala Lumpur peaks at average 624 in May" ,
-                       "— 4 times above national average — driven by", 
+                       "(4 times above national average), driven by", 
                     "National Blood Donation campaigns."]}
   }
 }

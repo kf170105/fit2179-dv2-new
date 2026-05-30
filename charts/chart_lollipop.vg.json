@@ -90,7 +90,7 @@
           "type": "nominal",
           "scale": {
             "domain": ["Improved", "Declined"],
-            "range": ["#27AE60", "#555555"]
+            "range": ["#27AE60", "#888888"]
           },
           "legend": null
         }
@@ -135,7 +135,7 @@
           "legend": {
             "title": "Average Daily Donors in 2024",
             "orient": "none",
-            "legendX":225,
+            "legendX":425,
             "legendY":-170,
             "offset": 55,
             "titleFont": "Open Sans",
@@ -220,7 +220,7 @@
       "fontSize": 9,
       "font": "Open Sans",
       "fontWeight": "bold",
-      "color": "#555555",
+      "color": "#888888",
       "dy": -15
     },
     "encoding": {
@@ -248,7 +248,7 @@
     "fontWeight": "bold",
     "color": "#27AE60",
     "align": "left",
-    "dx": -50,
+    "dx": -85,
     "dy": 11
   },
   "encoding": {
@@ -270,11 +270,10 @@
         "fontSize": 10,
         "font": "Open Sans",
         "fontWeight": "bold",
-        "color": "#555555",
+        "color": "#888888",
         "align": "left",
-        "dx": -55,
-        "dy": -10
-      },
+        "dx": -125,
+        "dy": -40      },
       "encoding": {
         "x": {"field": "growth_rate", "type": "quantitative"},
         "y": {
@@ -282,7 +281,7 @@
           "type": "nominal",
           "sort": {"field": "growth_rate", "order": "descending"}
         },
-        "text": {"value": ["Needs","attention"]}
+        "text": {"value": ["Attention is needed","for both Northern states","to reverse the decline."]}
       }
     }
   ],

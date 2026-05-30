@@ -14,15 +14,15 @@ body {
 
 /* PAGE WRAPPER */
 .page-wrapper {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px;
 }
 
 /* TYPOGRAPHY HIERARCHY */
 h1 {
   font-family: Georgia, serif;
-  font-size: 40px;
+  font-size: 50px;
   font-weight: 700;
   color: #333333;
   margin-bottom: 8px;
@@ -56,12 +56,12 @@ p {
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   padding: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 13px;
 }
 
 /* SECTION LABEL */
 .section-label {
-  font-size: 20px;
+  font-size: 27px;
   font-weight: 700;
   font-family: 'Georgia',Georgia;
   color: #333333;
@@ -70,7 +70,7 @@ p {
   margin-bottom: 16px;
   border-left: 3px solid #E74C3C;
   padding-left: 10px;
-  margin-top: 70px;
+  margin-top: 30px;
 }
 
 .section-intro {

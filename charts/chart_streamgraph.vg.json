@@ -79,9 +79,13 @@
             "title": "Donation Volume",
             "titleFont": "Open Sans",
             "titleFontSize": 12,
-            "labels": false,
-            "ticks": false
-            }
+            "labels": true,
+            "labelFont": "Open Sans",
+            "labelFontSize": 11,
+            "ticks": true,
+            "tickColor": "#cccccc",
+            "format": ",.0f"
+          }
         },
         "color": {
           "field": "blood_label",
@@ -93,7 +97,7 @@
           "legend": {
             "title": "Blood Type",
             "orient": "none",
-            "legendX": 390,
+            "legendX": 560,
             "legendY":-100,
             "titleFont": "Open Sans",
             "labelFont": "Open Sans",
@@ -127,7 +131,7 @@
       },
       "encoding": {
         "text": {
-          "value": "• Type O dominates — most common blood type donated nationally"
+          "value": ["• Type O fills 40%+ of all donations,most Malaysians" ,"carry O blood naturally, making it the backbone", "of national blood supply."]
         }
       }
     },
@@ -145,7 +149,7 @@
     },
     "encoding": {
         "text": {
-        "value": "• Type AB — rarest blood type"
+        "value": ["• Type AB under 5% of donations,the rarest yet", "most critical for patients with rare conditions."]
         }
     }
     }

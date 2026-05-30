@@ -1,0 +1,454 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "padding": {
+    "right": -1
+  },
+  "title": {
+    "text": "Which Hospitals Drive Malaysia's Blood Donation Supply?",
+    "subtitle": [
+      "Circle size = total blood donations per hospital.",
+      "Showing cumulative donations from 2023 to 2025."
+    ],
+    "fontSize": 18,
+    "font": "Georgia",
+    "fontWeight": "bold",
+    "subtitleFontSize": 12,
+    "subtitleFont": "Open Sans",
+    "subtitleFontWeight": "normal",
+    "subtitleColor": "#666666",
+    "color": "#333333",
+    "anchor": "start",
+    "subtitlePadding": 8,
+    "offset": 15
+  },
+  "width": 1350,
+  "height": 750,
+  
+  "projection": {
+    "type": "equirectangular",
+    "center": [
+      114.5,
+      2.5
+    ],
+    "scale": 2300
+  },
+  "layer": [
+    {
+      "data": {
+        "sphere": true
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#EBF5FB",
+        "stroke": null
+      }
+    },
+    {
+      "data": {
+        "url": "charts/southeast_asia.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "ne_110m_admin_0_countries"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#DDDDDD",
+        "stroke": "white",
+        "strokeWidth": 0.5
+      }
+    },
+    {
+      "data": {
+        "url": "data/blood_donations_filtered_dataset1.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum.blood_type == 'all'"
+        },
+        {
+          "calculate": "datum.state == 'W.P. Kuala Lumpur' ? 'Kuala Lumpur' : datum.state",
+          "as": "state_name"
+        },
+        {
+          "aggregate": [
+            {
+              "op": "mean",
+              "field": "donations",
+              "as": "avg_donations"
+            }
+          ],
+          "groupby": [
+            "state_name"
+          ]
+        },
+        {
+          "lookup": "state_name",
+          "from": {
+            "data": {
+              "url": "charts/malaysia.topojson",
+              "format": {
+                "type": "topojson",
+                "feature": "ne_10m_admin_1_states_provinces"
+              }
+            },
+            "key": "properties.name",
+            "fields": [
+              "type",
+              "properties",
+              "geometry"
+            ]
+          },
+          "as": [
+            "type",
+            "properties",
+            "geo"
+          ]
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "fill": "#FDEBD0",
+        "stroke": "#cccccc",
+        "strokeWidth": 0.8
+      },
+      "encoding": {
+        "shape": {
+          "field": "geo",
+          "type": "geojson"
+        }
+      }
+    },
+    {
+      "data": {
+        "url": "data/donations_facility_dataset2_clean.csv"
+      },
+      "transform": [
+        {"filter": "datum.daily > 0"},
+        {
+          "aggregate": [
+            {
+              "op": "sum",
+              "field": "daily",
+              "as": "total_daily"
+            }
+          ],
+          "groupby": [
+            "hospital"
+          ]
+        },
+        {
+          "calculate": "datum.hospital == 'Hospital Duchess Of Kent' || datum.hospital == 'Hospital Miri' || datum.hospital == 'hospital Miri' || datum.hospital == 'Hospital Queen Elizabeth II' || datum.hospital == 'Hospital Sibu' || datum.hospital == 'Hospital Tawau' || datum.hospital == 'Hospital Umum Sarawak' ? 'Hospital in in East Malaysia' : 'Hospital in in Peninsular Malaysia'",
+          "as": "region"
+        },
+        {
+          "lookup": "hospital",
+          "from": {
+            "data": {
+              "values": [
+                {
+                  "hospital": "Hospital Duchess Of Kent",
+                  "longitude": 118.1179,
+                  "latitude": 5.8402
+                },
+                {
+                  "hospital": "Hospital Melaka",
+                  "longitude": 102.2501,
+                  "latitude": 2.2055
+                },
+                {
+                  "hospital": "Hospital Miri",
+                  "longitude": 113.9914,
+                  "latitude": 4.3995
+                },
+                {
+                  "hospital": "hospital Miri",
+                  "longitude": 113.9914,
+                  "latitude": 4.3995
+                },
+                {
+                  "hospital": "Hospital Pulau Pinang",
+                  "longitude": 100.3288,
+                  "latitude": 5.4141
+                },
+                {
+                  "hospital": "Hospital Queen Elizabeth II",
+                  "longitude": 116.0724,
+                  "latitude": 5.9749
+                },
+                {
+                  "hospital": "Hospital Raja Perempuan Zainab II",
+                  "longitude": 102.2388,
+                  "latitude": 6.1184
+                },
+                {
+                  "hospital": "Hospital Raja Permaisuri Bainun",
+                  "longitude": 101.0901,
+                  "latitude": 4.5975
+                },
+                {
+                  "hospital": "Hospital Seberang Jaya",
+                  "longitude": 100.3952,
+                  "latitude": 5.3975
+                },
+                {
+                  "hospital": "Hospital Seri Manjung",
+                  "longitude": 100.6536,
+                  "latitude": 4.2167
+                },
+                {
+                  "hospital": "Hospital Sibu",
+                  "longitude": 111.8174,
+                  "latitude": 2.3054
+                },
+                {
+                  "hospital": "Hospital Sultan Haji Ahmad Shah",
+                  "longitude": 102.4168,
+                  "latitude": 3.4594
+                },
+                {
+                  "hospital": "Hospital Sultanah Aminah",
+                  "longitude": 103.7618,
+                  "latitude": 1.4854
+                },
+                {
+                  "hospital": "Hospital Sultanah Bahiyah",
+                  "longitude": 100.3673,
+                  "latitude": 6.1248
+                },
+                {
+                  "hospital": "Hospital Sultanah Nora Ismail",
+                  "longitude": 102.9343,
+                  "latitude": 1.8556
+                },
+                {
+                  "hospital": "Hospital Sultanah Nur Zahirah",
+                  "longitude": 103.1408,
+                  "latitude": 5.3301
+                },
+                {
+                  "hospital": "Hospital Taiping",
+                  "longitude": 100.739,
+                  "latitude": 4.856
+                },
+                {
+                  "hospital": "Hospital Tawau",
+                  "longitude": 117.8912,
+                  "latitude": 4.2492
+                },
+                {
+                  "hospital": "Hospital Tengku Ampuan Afzan",
+                  "longitude": 103.3246,
+                  "latitude": 3.8193
+                },
+                {
+                  "hospital": "Hospital Tengku Ampuan Rahimah",
+                  "longitude": 101.4481,
+                  "latitude": 3.0449
+                },
+                {
+                  "hospital": "Hospital Tuanku Jaafar",
+                  "longitude": 101.9381,
+                  "latitude": 2.7297
+                },
+                {
+                  "hospital": "Hospital Umum Sarawak",
+                  "longitude": 110.3592,
+                  "latitude": 1.5611
+                },
+                {
+                  "hospital": "Pusat Darah Negara",
+                  "longitude": 101.6865,
+                  "latitude": 3.1728
+                }
+              ]
+            },
+            "key": "hospital",
+            "fields": [
+              "longitude",
+              "latitude"
+            ]
+          }
+        }
+      ],
+      "layer": [
+        {
+          "mark": {
+            "type": "circle",
+            "stroke": "white",
+            "strokeWidth": 1
+          },
+          "encoding": {
+            "longitude": {
+              "field": "longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "latitude",
+              "type": "quantitative"
+            },
+            "opacity": {
+              "condition": [
+                {
+                  "test": "datum.hospital == 'Pusat Darah Negara'",
+                  "value": 0.55
+                },
+                {
+                  "test": "datum.hospital == 'Hospital Tuanku Jaafar'",
+                  "value": 0.6
+                },
+                {
+                  "test": "datum.hospital == 'Hospital Tengku Ampuan Rahimah'",
+                  "value": 0.6
+                }
+              ],
+              "value": 0.8
+            },
+            "size": {
+              "field": "total_daily",
+              "type": "quantitative",
+              "title": "Total Donors",
+              "scale": {
+                "range": [
+                  30,
+                  1200
+                ],
+                "type": "sqrt"
+              },
+              "legend": {
+                "title": "Total Donors",
+                "orient": "right",
+                "offset": 10,
+                "values": [
+                  5000,
+                  10000,
+                  20000,
+                  50000,
+                  100000,
+                  200000
+                ],
+                "titleFont": "Open Sans",
+                "labelFont": "Open Sans",
+                "titleFontSize": 11,
+                "labelFontSize": 10
+              }
+            },
+            "color": {
+              "field": "region",
+              "type": "nominal",
+              "scale": {
+                "domain": [
+                  "Hospital in in Peninsular Malaysia",
+                  "Hospital in in East Malaysia"
+                ],
+                "range": [
+                  "#2980B9",
+                  "#E67E22"
+                ]
+              },
+              "legend": {
+                "title": "Region",
+                "orient": "right",
+                "offset": 10,
+                "labelExpr": "split(datum.label, ' in ')",
+                "titleFont": "Open Sans",
+                "labelFont": "Open Sans",
+                "titleFontSize": 12,
+                "labelFontSize": 11
+              }
+            },
+            "tooltip": [
+              {
+                "field": "hospital",
+                "type": "nominal",
+                "title": "Hospital"
+              },
+              {
+                "field": "region",
+                "type": "nominal",
+                "title": "Region"
+              },
+              {
+                "field": "total_daily",
+                "title": "Total Donors",
+                "format": ","
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "longitude": 103.8,
+            "latitude": 4.5
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 10,
+        "font": "Open Sans",
+        "fontWeight": "bold",
+        "fontStyle": "italic",
+        "color": "#2980B9",
+        "align": "left",
+        "lineBreak": "\n"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "text": {
+          "value": "16 Peninsular hospitals supply\n~92% of Malaysia's total\nblood as urban density drives\nnational donation capacity"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "longitude": 119.3,
+            "latitude": 5
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 10,
+        "font": "Open Sans",
+        "fontWeight": "bold",
+        "fontStyle": "italic",
+        "color": "#E67E22",
+        "align": "left",
+        "lineBreak": "\n"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "text": {
+          "value": "East Malaysia lags in which\n6 hospitals serve\nless accessible regions"
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Open Sans",
+    "view": {
+      "stroke": null
+    }
+  }
+}

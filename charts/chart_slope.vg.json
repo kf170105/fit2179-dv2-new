@@ -78,7 +78,7 @@
         "x": {
           "field": "year_str",
           "type": "ordinal",
-          "title": null,
+          "title": "Year",
           "scale": {"paddingOuter": 0},
           "axis": {
             "labelAngle": 0,
@@ -117,12 +117,12 @@
           "type": "nominal",
           "scale": {
             "domain": ["Increased", "Decreased"],
-            "range": ["#27AE60", "#555555"]
+            "range": ["#27AE60", "#888888"]
           },
           "legend": {
                 "title": "Direction",
                 "orient": "none",
-                "legendX": 320,
+                "legendX": 510,
                 "legendY": -80,
                 "direction": "vertical",
                 "titleFont": "Open Sans",
@@ -143,7 +143,7 @@
           "type": "nominal",
           "scale": {
             "domain": ["Increased", "Decreased"],
-            "range": ["#27AE60", "#555555"]
+            "range": ["#27AE60", "#888888"]
           },
           "legend": null
         },
@@ -175,7 +175,7 @@
           "type": "nominal",
           "scale": {
             "domain": ["Increased", "Decreased"],
-            "range": ["#27AE60", "#555555"]
+            "range": ["#27AE60", "#888888"]
           },
           "legend": null
         }
@@ -200,9 +200,29 @@
           "type": "nominal",
           "scale": {
             "domain": ["Increased", "Decreased"],
-            "range": ["#27AE60", "#555555"]
+            "range": ["#27AE60", "#888888"]
           },
           "legend": null
+        }
+      }
+    },
+    {
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "fontSize": 10,
+        "font": "Open Sans",
+        "fontWeight": "bold",
+        "fontStyle": "italic",
+        "color": "#27AE60",
+        "align": "left",
+        "x": 160,
+        "y": -30,
+        "lineBreak": "\n"
+      },
+      "encoding": {
+        "text": {
+          "value": "9 of 12 states grew in 2025,\nproving consistent national\ndonor growth year on year."
         }
       }
     }

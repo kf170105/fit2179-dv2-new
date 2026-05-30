@@ -74,8 +74,8 @@
 },
   
   "spec": {
-  "width": 920,
-  "height": 120,
+  "width": 1450,
+  "height": 200,
   "layer": [
     {
       "mark": {
@@ -96,7 +96,8 @@
             "labelFontSize": 10,
             "format": "%b %Y",
             "labelAngle": -30,
-            "grid": false
+            "grid": false,
+            "tickCount": {"interval": "month", "step": 1}
           }
         },
         "y": {
@@ -179,7 +180,7 @@
         },
         {"filter": "datum.monthly_total == datum.peak && datum.donor_group == 'Police & Army'"},
         {
-          "calculate": "'Peak: ' + format(datum.monthly_total, '.0f') + ' donors — sudden rise, still fewest nationally'",
+          "calculate": "'Peak: ' + format(datum.monthly_total, '.0f') + ' donors — sudden rise, yet still fewest nationally'",
           "as": "peak_label_army"
         }
       ],
@@ -197,6 +198,42 @@
           "encoding": {
             "x": {"field": "year_month", "type": "temporal", "timeUnit": "yearmonth"},
             "text": {"field": "peak_label_army", "type": "nominal"}
+          }
+        }
+      ]
+    },
+    {
+      "transform": [
+        {"timeUnit": "yearmonth", "field": "date_iso", "as": "year_month"},
+        {
+          "aggregate": [{"op": "sum", "field": "count_num", "as": "monthly_total"}],
+          "groupby": ["year_month", "donor_group"]
+        },
+        {
+          "window": [{"op": "max", "field": "monthly_total", "as": "peak"}],
+          "groupby": ["donor_group"],
+          "frame": [null, null]
+        },
+        {"filter": "datum.monthly_total == datum.peak && datum.donor_group == 'Students'"},
+        {
+          "calculate": "'Peak: ' + format(datum.monthly_total, '.0f')  + ' donors, students surge due to blood donation campaign drives into campus'",
+          "as": "peak_label_student"
+        }
+      ],
+      "layer": [
+        {
+          "mark": {"type": "rule", "color": "#3498DB", "strokeWidth": 1.5},
+          "encoding": {
+            "x": {"field": "year_month", "type": "temporal", "timeUnit": "yearmonth"},
+            "y": {"field": "monthly_total", "type": "quantitative"},
+            "y2": {"value": -19}
+          }
+        },
+        {
+          "mark": {"type": "text", "fontSize": 10, "font": "Open Sans", "fontWeight": "bold", "color": "#3498DB", "align": "left", "dx": -50, "y": -25},
+          "encoding": {
+            "x": {"field": "year_month", "type": "temporal", "timeUnit": "yearmonth"},
+            "text": {"field": "peak_label_student", "type": "nominal"}
           }
         }
       ]

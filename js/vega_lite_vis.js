@@ -1,4 +1,5 @@
 var choropleth_map = "charts/map1_choropleth.vg.json";
+var proportional_map = "charts/chart_proportional_map.vg.json";
 var heatmap = "charts/chart_heatmap.vg.json";
 var stacked_area = "charts/chart_area_multiples.vg.json";
 var bubble = "charts/chart_bubble.vg.json";
@@ -9,6 +10,10 @@ var bump = "charts/chart_bump.vg.json";
 var slope = "charts/chart_slope.vg.json";
 
 vegaEmbed("#choropleth_map", choropleth_map, {"actions": false})
+  .then(function(result){})
+  .catch(console.error);
+
+vegaEmbed("#proportional_map", proportional_map, {"actions": false})
   .then(function(result){})
   .catch(console.error);
 

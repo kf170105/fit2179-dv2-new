@@ -17,7 +17,7 @@
     "color": "#333333",
     "anchor": "start",
     "subtitlePadding": 8,
-    "offset": -50
+    "offset": -30
   },
   "width": "container",
   "height": 500,
@@ -62,7 +62,7 @@
         "x": {
           "field": "year_str",
           "type": "ordinal",
-          "title": null,
+          "title": "Year",
           "axis": {
             "labelAngle": 0,
             "labelFont": "Open Sans",
@@ -71,7 +71,7 @@
             "labelColor": "#333333",
             "grid": false,
             "domain": true,
-            "domainColor": "#555555",
+            "domainColor": "#888888",
             "labelPadding": 2
           }
         },
@@ -99,12 +99,12 @@
           "type": "nominal",
           "scale": {
             "domain": ["Improved", "Stable", "Declined"],
-            "range": ["#1E8449", "#2980B9", "#555555"]
+            "range": ["#1E8449", "#2980B9", "#888888"]
           },
           "legend": {
             "title": "Rank Change",
             "orient": "none",
-            "legendX": 380,
+            "legendX": 575,
             "legendY": -100,
             "direction": "vertical",
             "titleFont": "Open Sans",
@@ -131,7 +131,7 @@
           "type": "nominal",
           "scale": {
             "domain": ["Improved", "Stable", "Declined"],
-            "range": ["#1E8449", "#aaaaaa", "#555555"]
+            "range": ["#1E8449", "#aaaaaa", "#888888"]
           },
           "legend": null
         },
@@ -185,7 +185,7 @@
           "type": "nominal",
           "scale": {
             "domain": ["Improved", "Stable", "Declined"],
-            "range": ["#1E8449", "#aaaaaa", "#555555"]
+            "range": ["#1E8449", "#aaaaaa", "#888888"]
           },
           "legend": null
         }
@@ -213,7 +213,7 @@
           "type": "nominal",
           "scale": {
             "domain": ["Improved", "Stable", "Declined"],
-            "range": ["#1E8449", "#aaaaaa", "#555555"]
+            "range": ["#1E8449", "#aaaaaa", "#888888"]
           },
           "legend": null
         }
@@ -227,7 +227,7 @@
         "type": "text",
         "align": "left",
         "dx": 43,
-        "dy": 2,
+        "dy": -25,
         "fontSize": 10,
         "font": "Open Sans",
         "fontWeight": "bold",
@@ -240,7 +240,7 @@
         "type": "quantitative",
         "scale": {"reverse": true, "domain": [1, 13.5]}
         },
-        "text": {"value": ["Johor overtakes","Perak in 2025"]}
+        "text": {"value": ["Johor rises above Perak", "in 2025, the only state", "to climb in rankings", "as southern cities grow."]}
         }
     },
     {
@@ -255,7 +255,7 @@
         "fontSize": 10,
         "font": "Open Sans",
         "fontWeight": "bold",
-        "color": "#555555"
+        "color": "#888888"
       },
       "encoding": {
         "x": {"field": "year_str", "type": "ordinal"},
@@ -265,6 +265,26 @@
           "scale": {"reverse": true, "domain": [1, 13.5]}
         },
         "text": {"value": "Perak held rank 2 until Johor surged in 2025"}
+      }
+    },
+    {
+      "data": {"values": [{}]},
+      "mark": {
+        "type": "text",
+        "fontSize": 10,
+        "font": "Open Sans",
+        "fontWeight": "bold",
+        "fontStyle": "italic",
+        "color": "#2980B9",
+        "align": "left",
+        "x": 200,
+        "y": -40,
+        "lineBreak": "\n"
+      },
+      "encoding": {
+        "text": {
+          "value": "11 of 13 states hold their ranks,\nshowing donation patterns follow\nMalaysia's urban growth steadily."
+        }
       }
     }
   ],

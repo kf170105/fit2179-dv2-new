@@ -122,7 +122,7 @@
           "legend": {
           "title": "Total Daily Donors",
           "orient": "none",
-          "legendX": 900,
+          "legendX": 1300,
           "legendY": -215,
           "titleFont": "Open Sans",
           "labelFont": "Open Sans",
@@ -140,7 +140,7 @@
           "legend": {
             "title": "Region",
             "orient": "none",
-            "legendX": 760,
+            "legendX": 1100,
             "legendY": -215,
             "titleFont": "Open Sans",
             "labelFont": "Open Sans",
@@ -193,7 +193,7 @@
     "fontWeight": "bold",
     "color": "#7B241C",
     "align": "left",
-    "x": 800,
+    "x": 1200,
     "y": 25
   },
   "encoding": {

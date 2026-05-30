@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "Which Malaysian State Donates the Most Blood?",
-    "subtitle": ["Average blood donors per day per state, from January 2023 to September 2025.","Drag slider to compare years."],
+    "subtitle": ["Average daily blood donors per state", "from January 2023 to September 2025.","User can select an individual state to highlight", "and compare donations."],
     "dy": -20,
     "fontSize": 18,
     "font": "Georgia",
@@ -14,25 +14,15 @@
     "anchor": "start",
     "subtitlePadding": 5
   },
-  "width": 950,
-  "height": 550,
+  "width": 1350,
+  "height": 750,
   "projection": {
     "type": "equirectangular",
     "center": [114.5,2.5],
-    "scale": 1500
+    "scale": 2300
   },
   "params": [
-    {
-      "name": "Year_Selection",
-      "value": 2024,
-      "bind": {
-        "input": "range",
-        "min": 2023,
-        "max": 2025,
-        "step": 1,
-        "name": "Select Year: "
-      }
-    },
+    
     {
       "name": "State_Selection",
       "value": "All",
@@ -93,7 +83,7 @@
         {
           "filter": "datum.blood_type == 'all'"
         },
-        {"filter": "year(datum.date) == Year_Selection"},
+        
         {
           "calculate": "datum.state == 'W.P. Kuala Lumpur' ? 'Kuala Lumpur' : datum.state",
           "as": "state_name"
@@ -265,7 +255,7 @@
         "longitude": {"field": "longitude", "type": "quantitative"},
         "latitude": {"field": "latitude", "type": "quantitative"},
         "text": {
-          "value": "West Malaysia leads\n nationally in donations\n especially in state Kuala Lumpur,\n Perak and Johor."
+          "value": "More hospitals and blood drives in\nPeninsular, causing donations stay high.\nKuala Lumpur alone gives more than\nall of East Malaysia combined"
         }
       }
     },
